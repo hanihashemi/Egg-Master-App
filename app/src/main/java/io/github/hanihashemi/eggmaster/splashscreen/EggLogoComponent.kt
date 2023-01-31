@@ -1,15 +1,20 @@
 package io.github.hanihashemi.eggmaster.splashscreen
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -18,32 +23,55 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.rotate
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.Path
 import androidx.compose.ui.graphics.vector.PathParser
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import io.github.hanihashemi.eggmaster.ui.theme.EggMasterTheme
 import kotlinx.coroutines.delay
 
 @Composable
 fun EggLogoComponent() {
-    Box(modifier = Modifier.aspectRatio(1F), contentAlignment = Alignment.Center) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
+
+    val scale by animateFloatAsState(
+        targetValue = if (isPressed) 0.9F else 1F,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        )
+    )
+
+    Box(
+        modifier = Modifier
+            .aspectRatio(1F)
+            .graphicsLayer {
+                scaleX = scale
+                scaleY = scale
+            }, contentAlignment = Alignment.Center
+    ) {
         Image(
             painter = createEggWhiteVectorPainter(),
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize(fraction = 0.7F)
+            modifier = Modifier
+                .fillMaxSize(fraction = 0.7F)
+                .clickable(interactionSource = interactionSource, indication = null) {}
         )
 
-        YolkComponent(modifier = Modifier.fillMaxSize(fraction = 0.3F))
+        YolkComponent(modifier = Modifier.fillMaxSize(fraction = 0.3F), isPressed)
     }
 }
 
 @Composable
-private fun YolkComponent(modifier: Modifier) {
-    var rightEyeToggle by remember { mutableStateOf(false) }
+private fun YolkComponent(modifier: Modifier, reRunAnimation: Boolean = false) {
+    var rightEyeToggle by rememberSaveable { mutableStateOf(false) }
     val rightEyeClosedSweepAngle: Float by animateFloatAsState(
         animationSpec = spring(
             dampingRatio = Spring.DampingRatioMediumBouncy,
@@ -57,7 +85,13 @@ private fun YolkComponent(modifier: Modifier) {
         ),
         targetValue = if (rightEyeToggle) 0.04F else 0.058F
     )
-    var faceRotationToggle by remember { mutableStateOf(false) }
+    val rightEyeColor: Color by animateColorAsState(
+        animationSpec = tween(
+            durationMillis = 200
+        ),
+        targetValue = if (rightEyeToggle) Color(0XFFFFFFFF) else Color(0XFFFFE0B3)
+    )
+    var faceRotationToggle by rememberSaveable { mutableStateOf(false) }
     val faceRotate: Float by animateFloatAsState(
         animationSpec = spring(
             dampingRatio = Spring.DampingRatioHighBouncy,
@@ -66,11 +100,16 @@ private fun YolkComponent(modifier: Modifier) {
         targetValue = if (faceRotationToggle) -400F else 0F
     )
 
-    LaunchedEffect(true) {
-        delay(50)
-        rightEyeToggle = true
-        delay(300)
-        faceRotationToggle = true
+    LaunchedEffect(reRunAnimation) {
+        if (reRunAnimation) {
+            faceRotationToggle = false
+            rightEyeToggle = false
+        } else {
+            delay(50)
+            rightEyeToggle = true
+            delay(300)
+            faceRotationToggle = true
+        }
     }
 
     Canvas(
@@ -107,7 +146,7 @@ private fun YolkComponent(modifier: Modifier) {
 
             val rightEyeClosedSize = size * 0.65F
             drawArc(
-                color = Color(0XFFFFFFFF),
+                color = rightEyeColor,
                 startAngle = 276F,
                 sweepAngle = rightEyeClosedSweepAngle,
                 topLeft = center - Offset(
@@ -140,5 +179,13 @@ private fun createEggWhiteVectorPainter(): Painter {
             pathData = pathData,
             fill = SolidColor(Color.White)
         )
+    }
+}
+
+@Preview
+@Composable
+private fun EggComponentPreview() {
+    EggMasterTheme {
+        EggLogoComponent()
     }
 }
