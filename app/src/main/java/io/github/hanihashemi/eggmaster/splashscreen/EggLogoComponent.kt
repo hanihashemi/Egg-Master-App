@@ -1,20 +1,16 @@
 package io.github.hanihashemi.eggmaster.splashscreen
 
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -37,16 +33,38 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun EggLogoComponent() {
+    var currentState by remember { mutableStateOf(EggLogoState.Released) }
+    val transition = updateTransition(currentState, label = "Logo Transition")
     val interactionSource = remember { MutableInteractionSource() }
-    val isPressed by interactionSource.collectIsPressedAsState()
+    var isPressed by remember { mutableStateOf(false) }
 
-    val scale by animateFloatAsState(
-        targetValue = if (isPressed) 0.9F else 1F,
-        animationSpec = spring(
-            dampingRatio = Spring.DampingRatioMediumBouncy,
-            stiffness = Spring.StiffnessLow
-        )
-    )
+    LaunchedEffect(interactionSource) {
+        interactionSource.interactions.collect { interaction ->
+            when (interaction) {
+                is PressInteraction.Press -> {
+                    currentState = EggLogoState.Pressed
+                    isPressed = true
+                }
+                is PressInteraction.Release -> {
+                    currentState = EggLogoState.Released
+                    isPressed = false
+                }
+            }
+        }
+    }
+
+    val scale by transition.animateFloat(label = "Logo Scale",
+        transitionSpec = {
+            spring(
+                dampingRatio = Spring.DampingRatioMediumBouncy,
+                stiffness = Spring.StiffnessLow,
+            )
+        }) { state ->
+        when (state) {
+            EggLogoState.Released -> 1F
+            EggLogoState.Pressed -> 0.95F
+        }
+    }
 
     Box(
         modifier = Modifier
@@ -71,44 +89,56 @@ fun EggLogoComponent() {
 
 @Composable
 private fun YolkComponent(modifier: Modifier, reRunAnimation: Boolean = false) {
-    var rightEyeToggle by rememberSaveable { mutableStateOf(false) }
-    val rightEyeClosedSweepAngle: Float by animateFloatAsState(
-        animationSpec = spring(
-            dampingRatio = Spring.DampingRatioMediumBouncy,
-            stiffness = Spring.StiffnessLow,
-        ),
-        targetValue = if (rightEyeToggle) 40F else 1F
-    )
-    val rightEyeStrokeWidth: Float by animateFloatAsState(
-        animationSpec = tween(
-            durationMillis = 200
-        ),
-        targetValue = if (rightEyeToggle) 0.04F else 0.058F
-    )
-    val rightEyeColor: Color by animateColorAsState(
-        animationSpec = tween(
-            durationMillis = 200
-        ),
-        targetValue = if (rightEyeToggle) Color(0XFFFFFFFF) else Color(0XFFFFE0B3)
-    )
-    var faceRotationToggle by rememberSaveable { mutableStateOf(false) }
-    val faceRotate: Float by animateFloatAsState(
-        animationSpec = spring(
-            dampingRatio = Spring.DampingRatioHighBouncy,
-            stiffness = Spring.StiffnessVeryLow,
-        ),
-        targetValue = if (faceRotationToggle) -400F else 0F
-    )
+    var currentState by remember { mutableStateOf(YolkState.Smile) }
+    val transition = updateTransition(currentState, label = "Yolk Transition")
+
+    val rightEyeClosedSweepAngle by transition.animateFloat(label = "Right Eye Winking",
+        transitionSpec = {
+            spring(
+                dampingRatio = Spring.DampingRatioMediumBouncy,
+                stiffness = Spring.StiffnessLow,
+            )
+        }) { state ->
+        when (state) {
+            YolkState.Smile -> 1F
+            else -> 40F
+        }
+    }
+    val rightEyeStrokeWidth by transition.animateFloat(label = "Right Eye Stroke Width",
+        transitionSpec = { tween(durationMillis = 200) }) { state ->
+        when (state) {
+            YolkState.Smile -> 0.058F
+            else -> 0.04F
+        }
+    }
+    val rightEyeColor by transition.animateColor(label = "Right Eye Color",
+        transitionSpec = { tween(durationMillis = 200) }) { state ->
+        when (state) {
+            YolkState.Smile -> Color(0XFFFFE0B3)
+            else -> Color(0XFFFFFFFF)
+        }
+    }
+    val faceRotate by transition.animateFloat(label = "Face Rotation",
+        transitionSpec = {
+            spring(
+                dampingRatio = Spring.DampingRatioMediumBouncy,
+                stiffness = Spring.StiffnessLow,
+            )
+        }) { state ->
+        when (state) {
+            YolkState.Smile -> 0F
+            YolkState.Wink -> 0F
+            YolkState.FaceRotate -> -400F
+        }
+    }
 
     LaunchedEffect(reRunAnimation) {
         if (reRunAnimation) {
-            faceRotationToggle = false
-            rightEyeToggle = false
+            currentState = YolkState.Smile
         } else {
-            delay(50)
-            rightEyeToggle = true
+            currentState = YolkState.Wink
             delay(300)
-            faceRotationToggle = true
+            currentState = YolkState.FaceRotate
         }
     }
 
@@ -182,7 +212,18 @@ private fun createEggWhiteVectorPainter(): Painter {
     }
 }
 
-@Preview
+private enum class YolkState {
+    Smile,
+    Wink,
+    FaceRotate,
+}
+
+private enum class EggLogoState {
+    Pressed,
+    Released,
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFF673AB7)
 @Composable
 private fun EggComponentPreview() {
     EggMasterTheme {
