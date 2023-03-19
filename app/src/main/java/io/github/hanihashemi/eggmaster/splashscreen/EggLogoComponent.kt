@@ -1,7 +1,11 @@
 package io.github.hanihashemi.eggmaster.splashscreen
 
 import androidx.compose.animation.animateColor
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -10,7 +14,12 @@ import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -29,6 +38,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import io.github.hanihashemi.eggmaster.ui.theme.EggMasterTheme
+import io.github.hanihashemi.eggmaster.ui.theme.YolkColor
+import io.github.hanihashemi.eggmaster.ui.theme.YolkLeftEyeColor
+import io.github.hanihashemi.eggmaster.ui.theme.YolkMouthColor
 import kotlinx.coroutines.delay
 
 @Composable
@@ -48,6 +60,10 @@ fun EggLogoComponent() {
                 is PressInteraction.Release -> {
                     currentState = EggLogoState.Released
                     isPressed = false
+                }
+                is PressInteraction.Cancel -> {
+                    isPressed = false
+                    currentState = EggLogoState.Released
                 }
             }
         }
@@ -89,7 +105,7 @@ fun EggLogoComponent() {
 
 @Composable
 private fun YolkComponent(modifier: Modifier, reRunAnimation: Boolean = false) {
-    var currentState by remember { mutableStateOf(YolkState.Smile) }
+    var currentState by remember { mutableStateOf(YolkState.SmileAndWink) }
     val transition = updateTransition(currentState, label = "Yolk Transition")
 
     val rightEyeClosedSweepAngle by transition.animateFloat(label = "Right Eye Winking",
@@ -100,22 +116,22 @@ private fun YolkComponent(modifier: Modifier, reRunAnimation: Boolean = false) {
             )
         }) { state ->
         when (state) {
-            YolkState.Smile -> 1F
+            YolkState.SmileAndWink -> 1F
             else -> 40F
         }
     }
     val rightEyeStrokeWidth by transition.animateFloat(label = "Right Eye Stroke Width",
         transitionSpec = { tween(durationMillis = 200) }) { state ->
         when (state) {
-            YolkState.Smile -> 0.058F
+            YolkState.SmileAndWink -> 0.058F
             else -> 0.04F
         }
     }
     val rightEyeColor by transition.animateColor(label = "Right Eye Color",
         transitionSpec = { tween(durationMillis = 200) }) { state ->
         when (state) {
-            YolkState.Smile -> Color(0XFFFFE0B3)
-            else -> Color(0XFFFFFFFF)
+            YolkState.SmileAndWink -> YolkLeftEyeColor
+            else -> Color.White
         }
     }
     val faceRotate by transition.animateFloat(label = "Face Rotation",
@@ -126,17 +142,16 @@ private fun YolkComponent(modifier: Modifier, reRunAnimation: Boolean = false) {
             )
         }) { state ->
         when (state) {
-            YolkState.Smile -> 0F
-            YolkState.Wink -> 0F
             YolkState.FaceRotate -> -400F
+            else -> 0F
         }
     }
 
     LaunchedEffect(reRunAnimation) {
         if (reRunAnimation) {
-            currentState = YolkState.Smile
+            currentState = YolkState.SmileAndWink
         } else {
-            currentState = YolkState.Wink
+            currentState = YolkState.SmileAndWink
             delay(300)
             currentState = YolkState.FaceRotate
         }
@@ -147,15 +162,17 @@ private fun YolkComponent(modifier: Modifier, reRunAnimation: Boolean = false) {
             .aspectRatio(1F)
     ) {
         drawCircle(
-            color = Color(0XFFFFBA4B), center = center, radius = size.width / 2
+            color = YolkColor,
+            center = center,
+            radius = size.width / 2,
         )
 
-        rotate(faceRotate) {
+        rotate(degrees = faceRotate) {
 
             val mouthSize = size * 0.7F
             val mouthStrokeWidth = Dp(size.width * 0.04F)
             drawArc(
-                color = Color(0XFFFAA847),
+                color = YolkMouthColor,
                 startAngle = 10F,
                 sweepAngle = 160F,
                 topLeft = center - Offset(
@@ -169,9 +186,11 @@ private fun YolkComponent(modifier: Modifier, reRunAnimation: Boolean = false) {
             )
 
             drawCircle(
-                color = Color(0XFFFFE0B3), center = center - Offset(
+                color = YolkLeftEyeColor,
+                center = center - Offset(
                     size.width * 0.15F, size.height * 0.3F
-                ), radius = size.width * 0.08F
+                ),
+                radius = size.width * 0.08F,
             )
 
             val rightEyeClosedSize = size * 0.65F
@@ -213,8 +232,7 @@ private fun createEggWhiteVectorPainter(): Painter {
 }
 
 private enum class YolkState {
-    Smile,
-    Wink,
+    SmileAndWink,
     FaceRotate,
 }
 
