@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace 'io.github.hanihashemi.eggmaster'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "io.github.hanihashemi.eggmaster"
         minSdk 26
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -37,7 +37,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.3.2'
+        kotlinCompilerExtensionVersion '1.5.6'
     }
     packagingOptions {
         resources {
@@ -47,18 +47,18 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
 
     // Compose
-    implementation 'androidx.activity:activity-compose:1.6.1'
+    implementation 'androidx.activity:activity-compose:1.8.1'
     implementation "androidx.compose.ui:ui-text-google-fonts:$compose_version"
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
     implementation "androidx.compose.animation:animation-graphics:$compose_version"
 
     // Material
-    implementation 'androidx.compose.material3:material3:1.1.0-alpha04'
+    implementation 'androidx.compose.material3:material3:1.1.2'
 
     // Debug tools
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
