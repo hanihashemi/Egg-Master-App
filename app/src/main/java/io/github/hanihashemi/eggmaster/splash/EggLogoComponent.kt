@@ -1,4 +1,4 @@
-package io.github.hanihashemi.eggmaster.splashscreen
+package io.github.hanihashemi.eggmaster.splash
 
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.Spring
