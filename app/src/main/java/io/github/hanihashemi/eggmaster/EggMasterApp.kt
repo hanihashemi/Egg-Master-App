@@ -8,16 +8,21 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import io.github.hanihashemi.eggmaster.eggboildetails.EggBoilDetailsScreen
 import io.github.hanihashemi.eggmaster.splash.SplashScreen
 import io.github.hanihashemi.eggmaster.tutorial.TutorialScreen
+import io.github.hanihashemi.eggmaster.ui.models.UiState
 
 @Composable
 fun EggMasterApp(
-    navController: NavHostController, viewModel: MainViewModel, state: MainViewModel.UiState
+    navController: NavHostController,
+    viewModel: MainViewModel,
+    state: UiState,
 ) {
     EggMasterNavHost(navController, viewModel)
     HandleTutorialScreenBackButton(navController, state, viewModel)
@@ -26,7 +31,7 @@ fun EggMasterApp(
 @Composable
 private fun HandleTutorialScreenBackButton(
     navController: NavHostController,
-    state: MainViewModel.UiState,
+    state: UiState,
     viewModel: MainViewModel
 ) {
     val isCurrentScreenTutorial = navController
@@ -41,6 +46,8 @@ private fun HandleTutorialScreenBackButton(
 
 @Composable
 private fun EggMasterNavHost(navController: NavHostController, viewModel: MainViewModel) {
+    val state by viewModel.viewState.collectAsState()
+
     NavHost(navController = navController,
         startDestination = Screen.Intro.route,
         enterTransition = {
@@ -84,15 +91,10 @@ private fun EggMasterNavHost(navController: NavHostController, viewModel: MainVi
             startDestination = Screen.Main.Destination.BoilDetail.route, route = Screen.Main.route
         ) {
             composable(Screen.Main.Destination.BoilDetail.route) {
-                Column {
-                    Text("Boil Details")
-
-                    Button(onClick = {
-                        navController.navigate("boil_timer")
-                    }) {
-                        Text("Boil Timer")
-                    }
-                }
+                EggBoilDetailsScreen(
+                    state = state,
+                    dispatch = viewModel::dispatch
+                )
             }
             composable(Screen.Main.Destination.BoilTimer.route) {
                 Column {

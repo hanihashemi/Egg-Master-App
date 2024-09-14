@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
             viewModel.viewEvent.collectLatest { viewEvent ->
                 when (viewEvent) {
                     is MainViewModel.ViewEvent.OpenNextPage -> {
-                        // Handle open next page event
+                        navController.navigate(Screen.Main.route)
                     }
                     is MainViewModel.ViewEvent.NavigateBack -> {
                         onBackPressedDispatcher.onBackPressed()
