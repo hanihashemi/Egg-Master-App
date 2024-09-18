@@ -36,6 +36,7 @@ import io.github.hanihashemi.eggmaster.MainViewModel.ViewAction.OnEggTemperature
 import io.github.hanihashemi.eggmaster.R
 import io.github.hanihashemi.eggmaster.components.OutlinedToggleButton
 import io.github.hanihashemi.eggmaster.components.OutlinedToggleImageButton
+import io.github.hanihashemi.eggmaster.eggboildetails.components.BottomBarButton
 import io.github.hanihashemi.eggmaster.ui.models.EggBoiledType
 import io.github.hanihashemi.eggmaster.ui.models.EggSize
 import io.github.hanihashemi.eggmaster.ui.models.EggTemperature
@@ -50,7 +51,8 @@ fun EggBoilDetailsScreen(
     dispatch: (MainViewModel.ViewAction) -> Unit,
 ) {
     Scaffold(
-        topBar = { TopBar() }
+        topBar = { TopBar() },
+        bottomBar = { BottomBarButton(state) },
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -64,56 +66,45 @@ fun EggBoilDetailsScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceAround,
             ) {
-                OutlinedToggleButton(
-                    modifier = Modifier.widthIn(90.dp),
+                OutlinedToggleButton(modifier = Modifier.widthIn(90.dp),
                     text = "Fridge temperature",
                     isSelect = state.eggDetails.temperature == EggTemperature.FRIDGE,
                     onClick = {
                         dispatch(OnEggTemperaturePressed(EggTemperature.FRIDGE))
-                    }
-                )
-                OutlinedToggleButton(
-                    modifier = Modifier.widthIn(90.dp),
+                    })
+                OutlinedToggleButton(modifier = Modifier.widthIn(90.dp),
                     text = "Room temperature",
                     isSelect = state.eggDetails.temperature == EggTemperature.ROOM,
                     onClick = {
                         dispatch(OnEggTemperaturePressed(EggTemperature.ROOM))
-                    }
-                )
+                    })
             }
             HeadLine(textBold = "Size")
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceAround,
             ) {
-                OutlinedToggleButton(
-                    modifier = Modifier.widthIn(90.dp),
+                OutlinedToggleButton(modifier = Modifier.widthIn(90.dp),
                     text = "S",
-                    isSelect = state.eggDetails.size == EggSize.S,
+                    isSelect = state.eggDetails.size == EggSize.Small,
                     onClick = {
-                        dispatch(OnEggSizePressed(EggSize.S))
-                    }
-                )
-                OutlinedToggleButton(
-                    modifier = Modifier.widthIn(90.dp),
+                        dispatch(OnEggSizePressed(EggSize.Small))
+                    })
+                OutlinedToggleButton(modifier = Modifier.widthIn(90.dp),
                     text = "M",
-                    isSelect = state.eggDetails.size == EggSize.M,
+                    isSelect = state.eggDetails.size == EggSize.Medium,
                     onClick = {
-                        dispatch(OnEggSizePressed(EggSize.M))
-                    }
-                )
-                OutlinedToggleButton(
-                    modifier = Modifier.widthIn(90.dp),
+                        dispatch(OnEggSizePressed(EggSize.Medium))
+                    })
+                OutlinedToggleButton(modifier = Modifier.widthIn(90.dp),
                     text = "L",
-                    isSelect = state.eggDetails.size == EggSize.L,
+                    isSelect = state.eggDetails.size == EggSize.Large,
                     onClick = {
-                        dispatch(OnEggSizePressed(EggSize.L))
-                    }
-                )
+                        dispatch(OnEggSizePressed(EggSize.Large))
+                    })
             }
             HeadLine(textBold = "Count")
-            Slider(
-                modifier = Modifier.fillMaxWidth(),
+            Slider(modifier = Modifier.fillMaxWidth(),
                 value = state.eggDetails.count.toFloat(),
                 valueRange = 1f..10f,
                 onValueChange = {
@@ -122,16 +113,14 @@ fun EggBoilDetailsScreen(
                 thumb = {
                     Box {
                         Image(
-                            modifier = Modifier
-                                .width(30.dp),
+                            modifier = Modifier.width(30.dp),
                             painter = painterResource(id = R.drawable.ic_egg),
                             contentDescription = "Boiling Pot",
                         )
 
                         Text(
-                            modifier = Modifier
-                                .align(Alignment.Center),
-                            style = MaterialTheme.typography.bodyLarge.copy(
+                            modifier = Modifier.align(Alignment.Center),
+                            style = MaterialTheme.typography.headlineMedium.copy(
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.primary
                             ),
@@ -139,31 +128,24 @@ fun EggBoilDetailsScreen(
                             text = "${state.eggDetails.count}",
                         )
                     }
-                }
-            )
+                })
             HeadLine(textBold = "Boiled Type")
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceAround,
             ) {
-                OutlinedToggleImageButton(
-                    text = "Soft",
+                OutlinedToggleImageButton(text = "Soft",
                     iconId = R.drawable.ic_egg_boiled_soft,
                     isSelect = state.eggDetails.boiledType == EggBoiledType.SOFT,
-                    onClick = { dispatch(OnEggBoiledTypePressed(EggBoiledType.SOFT)) }
-                )
-                OutlinedToggleImageButton(
-                    text = "Medium",
+                    onClick = { dispatch(OnEggBoiledTypePressed(EggBoiledType.SOFT)) })
+                OutlinedToggleImageButton(text = "Medium",
                     iconId = R.drawable.ic_egg_boiled_medium,
                     isSelect = state.eggDetails.boiledType == EggBoiledType.MEDIUM,
-                    onClick = { dispatch(OnEggBoiledTypePressed(EggBoiledType.MEDIUM)) }
-                )
-                OutlinedToggleImageButton(
-                    text = "Hard",
+                    onClick = { dispatch(OnEggBoiledTypePressed(EggBoiledType.MEDIUM)) })
+                OutlinedToggleImageButton(text = "Hard",
                     iconId = R.drawable.ic_egg_boiled_hard,
                     isSelect = state.eggDetails.boiledType == EggBoiledType.HARD,
-                    onClick = { dispatch(OnEggBoiledTypePressed(EggBoiledType.HARD)) }
-                )
+                    onClick = { dispatch(OnEggBoiledTypePressed(EggBoiledType.HARD)) })
             }
         }
     }
@@ -171,18 +153,15 @@ fun EggBoilDetailsScreen(
 
 @Composable
 private fun HeadLine(text: String = "Egg ", textBold: String) {
-    Text(
-        modifier = Modifier.padding(
-            bottom = Dimens.PaddingSmall,
-            top = Dimens.PaddingNormal,
-        ),
-        style = MaterialTheme.typography.headlineMedium,
-        text = buildAnnotatedString {
-            append(text)
-            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                append(textBold)
-            }
-        })
+    Text(modifier = Modifier.padding(
+        bottom = Dimens.PaddingSmall,
+        top = Dimens.PaddingNormal,
+    ), style = MaterialTheme.typography.headlineMedium, text = buildAnnotatedString {
+        append(text)
+        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+            append(textBold)
+        }
+    })
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

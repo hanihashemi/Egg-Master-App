@@ -2,20 +2,21 @@ package io.github.hanihashemi.eggmaster.ui.models
 
 data class EggDetailsUiModel(
     val temperature: EggTemperature = EggTemperature.FRIDGE,
-    val size: EggSize = EggSize.M,
+    val size: EggSize = EggSize.Medium,
     val count: Int = 1,
     val boiledType: EggBoiledType = EggBoiledType.MEDIUM,
+    val boilingTime: Int = 360,
 )
 
 enum class EggTemperature {
-    FRIDGE,
     ROOM,
+    FRIDGE,
 }
 
 enum class EggSize {
-    S,
-    M,
-    L,
+    Small,
+    Medium,
+    Large,
 }
 
 enum class EggBoiledType {
