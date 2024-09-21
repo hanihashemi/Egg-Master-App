@@ -36,7 +36,7 @@ import io.github.hanihashemi.eggmaster.MainViewModel.ViewAction.OnEggTemperature
 import io.github.hanihashemi.eggmaster.R
 import io.github.hanihashemi.eggmaster.components.OutlinedToggleButton
 import io.github.hanihashemi.eggmaster.components.OutlinedToggleImageButton
-import io.github.hanihashemi.eggmaster.eggboildetails.components.BottomBarButton
+import io.github.hanihashemi.eggmaster.eggboildetails.components.BoilingTimeBottomBar
 import io.github.hanihashemi.eggmaster.ui.models.EggBoiledType
 import io.github.hanihashemi.eggmaster.ui.models.EggSize
 import io.github.hanihashemi.eggmaster.ui.models.EggTemperature
@@ -52,7 +52,7 @@ fun EggBoilDetailsScreen(
 ) {
     Scaffold(
         topBar = { TopBar() },
-        bottomBar = { BottomBarButton(state) },
+        bottomBar = { BoilingTimeBottomBar(state) },
     ) { paddingValues ->
         Column(
             modifier = Modifier

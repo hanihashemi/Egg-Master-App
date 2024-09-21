@@ -6,29 +6,36 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.hanihashemi.eggmaster.MainViewModel.ViewAction.OnEggTemperaturePressed
 import io.github.hanihashemi.eggmaster.MainViewModel.ViewAction.TutorialNextPressed
 import io.github.hanihashemi.eggmaster.MainViewModel.ViewAction.TutorialPreviousPressed
+import io.github.hanihashemi.eggmaster.domain.BoilingTimeCalcUseCase
 import io.github.hanihashemi.eggmaster.ui.models.EggBoiledType
 import io.github.hanihashemi.eggmaster.ui.models.EggDetailsUiModel
 import io.github.hanihashemi.eggmaster.ui.models.EggSize
 import io.github.hanihashemi.eggmaster.ui.models.EggTemperature
 import io.github.hanihashemi.eggmaster.ui.models.UiState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor() : ViewModel() {
+class MainViewModel @Inject constructor(
+    private val boilingTimeCalcUseCase: BoilingTimeCalcUseCase,
+) : ViewModel() {
 
     private val _viewEvent: Channel<ViewEvent> = Channel()
     val viewEvent = _viewEvent.receiveAsFlow()
     private val internalState: MutableStateFlow<InternalState> = MutableStateFlow(InternalState())
     val viewState: StateFlow<UiState> = internalState
         .map { internalState -> generateUiState(internalState) }
+        .distinctUntilChanged()
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),
@@ -36,6 +43,7 @@ class MainViewModel @Inject constructor() : ViewModel() {
         )
 
     private fun generateUiState(internalState: InternalState): UiState {
+        println("==> boil time ui: ${internalState.eggDetails.boilingTime}")
         return UiState(
             tutorialCurrentStep = internalState.tutorialCurrentStep,
             eggDetails = internalState.eggDetails,
@@ -57,24 +65,28 @@ class MainViewModel @Inject constructor() : ViewModel() {
         internalState.update {
             it.copy(eggDetails = it.eggDetails.copy(boiledType = eggBoiledType))
         }
+        updateBoilingTime()
     }
 
     private fun onEggCountChanged(eggCount: Int) {
         internalState.update {
             it.copy(eggDetails = it.eggDetails.copy(count = eggCount))
         }
+        updateBoilingTime()
     }
 
     private fun onEggSizePressed(eggSize: EggSize) {
         internalState.update {
             it.copy(eggDetails = it.eggDetails.copy(size = eggSize))
         }
+        updateBoilingTime()
     }
 
     private fun onEggTemperaturePressed(eggTemperature: EggTemperature) {
         internalState.update {
             it.copy(eggDetails = it.eggDetails.copy(temperature = eggTemperature))
         }
+        updateBoilingTime()
     }
 
     private fun onTutorialNextPressed() {
@@ -92,6 +104,24 @@ class MainViewModel @Inject constructor() : ViewModel() {
             _viewEvent.trySend(ViewEvent.NavigateBack)
         } else {
             internalState.value = internalState.value.copy(tutorialCurrentStep = currentStep - 1)
+        }
+    }
+
+    private fun updateBoilingTime() {
+        viewModelScope.launch(Dispatchers.Default) {
+            val eggDetails = internalState.value.eggDetails
+            val boilingTime = boilingTimeCalcUseCase.run(
+                BoilingTimeCalcUseCase.Params(
+                    eggCount = eggDetails.count,
+                    eggSize = eggDetails.size,
+                    eggTemp = eggDetails.temperature,
+                    boilType = eggDetails.boiledType,
+                )
+            )
+
+            internalState.update {
+                it.copy(eggDetails = it.eggDetails.copy(boilingTime = boilingTime))
+            }
         }
     }
 
