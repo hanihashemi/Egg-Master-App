@@ -16,7 +16,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,6 +35,7 @@ import io.github.hanihashemi.eggmaster.MainViewModel.ViewAction.OnEggTemperature
 import io.github.hanihashemi.eggmaster.R
 import io.github.hanihashemi.eggmaster.components.OutlinedToggleButton
 import io.github.hanihashemi.eggmaster.components.OutlinedToggleImageButton
+import io.github.hanihashemi.eggmaster.components.TopBar
 import io.github.hanihashemi.eggmaster.eggboildetails.components.BoilingTimeBottomBar
 import io.github.hanihashemi.eggmaster.ui.models.EggBoiledType
 import io.github.hanihashemi.eggmaster.ui.models.EggSize
@@ -51,7 +51,7 @@ fun EggBoilDetailsScreen(
     dispatch: (MainViewModel.ViewAction) -> Unit,
 ) {
     Scaffold(
-        topBar = { TopBar() },
+        topBar = { TopBar("Egg Boil Details") },
         bottomBar = { BoilingTimeBottomBar(state) },
     ) { paddingValues ->
         Column(
@@ -162,23 +162,6 @@ private fun HeadLine(text: String = "Egg ", textBold: String) {
             append(textBold)
         }
     })
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TopBar() {
-    TopAppBar(
-        title = {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(end = Dimens.PaddingNormal),
-                horizontalArrangement = Arrangement.Center,
-            ) {
-                Text("Egg Boil Details")
-            }
-        },
-    )
 }
 
 @Composable
