@@ -1,4 +1,4 @@
-package io.github.hanihashemi.eggmaster.tutorial.components
+package io.github.hanihashemi.eggmaster.components
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -10,14 +10,12 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -26,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -33,9 +32,13 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import io.github.hanihashemi.eggmaster.R
+import io.github.hanihashemi.eggmaster.tutorial.components.EggAnimated
+import io.github.hanihashemi.eggmaster.ui.theme.EggMasterTheme
+import io.github.hanihashemi.eggmaster.ui.theme.Shapes
 import kotlin.math.pow
 import kotlin.math.sqrt
 import kotlin.random.Random
@@ -52,61 +55,49 @@ private const val BUBBLE_ANIMATION_DELAY_TO = 600
 private const val STEAM_ANIMATION_DURATION = 1200
 
 @Composable
-fun BoilingPot(dropEgg: Boolean) {
+fun BoilingPot(modifier: Modifier = Modifier, dropEgg: Boolean) {
     Box(
         modifier = Modifier
-            .aspectRatio(1F)
-            .fillMaxSize(),
-        contentAlignment = Alignment.TopCenter,
+            .size(width = 300.dp, height = 180.dp)
+            .then(modifier),
+        contentAlignment = Alignment.Center,
     ) {
-
-        var center by remember { mutableStateOf(Offset.Zero) }
-
-        Box(modifier = Modifier
-            .fillMaxSize(0.5F)
-            .onGloballyPositioned { coordinates ->
-                val boxCenter = Offset(
-                    x = coordinates.size.width / 2f,
-                    y = coordinates.size.height / 2f
-                )
-                center = boxCenter
-            }
-        ) {
-
-            Steam(
-                modifier = Modifier
-                    .offset(8.dp, 10.dp)
-                    .scale(2F)
-            )
-            Steam(
-                modifier = Modifier
-                    .offset(18.dp, 20.dp)
-                    .scale(1.5F)
-            )
-        }
-
+        SteamBox(
+            modifier = Modifier
+                .size(40.dp)
+                .align(Alignment.TopStart)
+                .offset(x = 70.dp, y = (-10).dp)
+        )
         Image(
             modifier = Modifier
                 .align(Alignment.Center)
-                .fillMaxWidth(1f)
-                .padding(24.dp),
+                .width(300.dp),
             painter = painterResource(id = R.drawable.ic_boiling_pot),
             contentDescription = "Boiling Pot"
         )
-
         Bubbles(
             Modifier
-                .align(Alignment.Center)
-                .fillMaxWidth(0.3F)
-                .fillMaxHeight(0.17F)
+                .size(width = 110.dp, height = 60.dp)
+                .offset(y = 15.dp)
         )
         EggAnimated(dropEgg)
     }
+}
 
-    Image(
-        painter = painterResource(id = R.drawable.ic_boiling_pot_background),
-        contentDescription = null
-    )
+@Composable
+private fun SteamBox(modifier: Modifier) {
+    Box(modifier = modifier) {
+        Steam(
+            modifier = Modifier
+                .offset(0.dp, 0.dp)
+                .scale(2F)
+        )
+        Steam(
+            modifier = Modifier
+                .offset(8.dp, 10.dp)
+                .scale(1.5F)
+        )
+    }
 }
 
 @Composable
@@ -180,7 +171,7 @@ private fun BubbleAnimated(bubble: Bubble) {
 
     val radius = bubble.radius * alpha
 
-    Canvas(modifier = Modifier.fillMaxSize()) {
+    Canvas(modifier = Modifier) {
         drawCircle(
             color = Color.White.copy(alpha = alpha),
             center = Offset(bubble.center.x, centerY),
@@ -236,3 +227,30 @@ private fun doesIntersect(newBubble: Bubble, existingBubbles: List<Bubble>): Boo
 }
 
 data class Bubble(val center: Offset, val radius: Float, val alpha: Float = 0f)
+
+
+@Preview
+@Composable
+private fun BoilingPotPreview() {
+    EggMasterTheme {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0xFF5E5E5E)),
+            contentAlignment = Alignment.Center,
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(300.dp)
+                    .clip(shape = Shapes.medium)
+                    .background(Color(0xFF252F72)),
+                contentAlignment = Alignment.Center,
+            ) {
+                BoilingPot(
+                    modifier = Modifier.background(Color.Red),
+                    dropEgg = true,
+                )
+            }
+        }
+    }
+}

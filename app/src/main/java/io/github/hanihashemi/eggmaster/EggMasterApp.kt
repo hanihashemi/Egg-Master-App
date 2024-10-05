@@ -83,7 +83,10 @@ private fun EggMasterNavHost(navController: NavHostController, viewModel: MainVi
                 }
             }
             composable(Screen.Intro.Destination.Tutorial.route) {
-                TutorialScreen(viewModel)
+                TutorialScreen(
+                    state = state,
+                    dispatch = viewModel::dispatch
+                )
             }
         }
 

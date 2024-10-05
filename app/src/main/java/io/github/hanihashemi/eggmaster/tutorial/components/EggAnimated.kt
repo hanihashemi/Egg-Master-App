@@ -26,7 +26,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import io.github.hanihashemi.eggmaster.R
 
-private const val EGG_SIZE = 40
 private const val EGG_ROTATION = 40F
 private const val EGG_POSITION = -40
 private const val EGG_ALPHA_ANIMATION_LABEL = "Egg Alpha Animation"
@@ -57,7 +56,7 @@ fun EggAnimated(dropEgg: Boolean) {
     )
     LaunchedEffect(dropEgg) {
         if (dropEgg) {
-            eggPosition = 0.dp
+            eggPosition = 10.dp
             eggAlpha = 1F
         } else {
             eggPosition = EGG_POSITION.dp
@@ -68,7 +67,7 @@ fun EggAnimated(dropEgg: Boolean) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Image(
             modifier = Modifier
-                .size(EGG_SIZE.dp)
+                .size(40.dp)
                 .offset(y = animatedEggPosition)
                 .rotate(EGG_ROTATION)
                 .alpha(animatedEggAlpha),

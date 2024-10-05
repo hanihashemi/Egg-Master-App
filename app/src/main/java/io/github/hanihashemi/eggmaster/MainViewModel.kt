@@ -43,10 +43,10 @@ class MainViewModel @Inject constructor(
         )
 
     private fun generateUiState(internalState: InternalState): UiState {
-        println("==> boil time ui: ${internalState.eggDetails.boilingTime}")
         return UiState(
             tutorialCurrentStep = internalState.tutorialCurrentStep,
             eggDetails = internalState.eggDetails,
+            dropEgg = internalState.tutorialCurrentStep >= 1,
         )
     }
 
