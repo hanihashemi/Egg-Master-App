@@ -7,31 +7,26 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.github.hanihashemi.eggmaster.components.Button
-import io.github.hanihashemi.eggmaster.components.ButtonDefaultStyles
+import io.github.hanihashemi.eggmaster.components.BottomBarButton
 import io.github.hanihashemi.eggmaster.ui.theme.Dimens
 import io.github.hanihashemi.eggmaster.ui.theme.EggMasterTheme
-import io.github.hanihashemi.eggmaster.ui.theme.Shapes
 
 
 @Composable
 fun SplashScreen(onStartClick: () -> Unit) {
     Scaffold(
         topBar = { TopBar() },
-        bottomBar = { BottomBar { onStartClick() } },
+        bottomBar = { BottomBarButton(text = "Let's start") { onStartClick() } },
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -72,30 +67,6 @@ private fun TopBar() {
                         color = Color.White.copy(alpha = 0.4F)
                     )
                 )
-            )
-        }
-    }
-}
-
-@Composable
-private fun BottomBar(onStartClick: () -> Unit) {
-    Box(
-        modifier = Modifier.fillMaxWidth(),
-        contentAlignment = Alignment.Center,
-    ) {
-        Box(
-            modifier = Modifier
-                .widthIn(max = 350.dp)
-                .padding(Dimens.PaddingNormal)
-                .clip(Shapes.large)
-                .fillMaxWidth()
-                .padding(Dimens.PaddingLarge),
-            contentAlignment = Alignment.Center,
-        ) {
-            Button(
-                text = "Let's start",
-                onClick = { onStartClick() },
-                style = ButtonDefaultStyles.Secondary,
             )
         }
     }
