@@ -6,11 +6,17 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.hanihashemi.eggmaster.MainViewModel.ViewAction.OnEggTemperaturePressed
 import io.github.hanihashemi.eggmaster.MainViewModel.ViewAction.TutorialNextPressed
 import io.github.hanihashemi.eggmaster.MainViewModel.ViewAction.TutorialPreviousPressed
+import io.github.hanihashemi.eggmaster.data.mappers.toDataModel
+import io.github.hanihashemi.eggmaster.data.mappers.toUiModel
+import io.github.hanihashemi.eggmaster.data.models.ScreenStep
+import io.github.hanihashemi.eggmaster.data.models.UserInfoDataModel
+import io.github.hanihashemi.eggmaster.data.preferences.EggMasterPreferences
 import io.github.hanihashemi.eggmaster.domain.BoilingTimeCalcUseCase
 import io.github.hanihashemi.eggmaster.ui.models.EggBoiledType
 import io.github.hanihashemi.eggmaster.ui.models.EggDetailsUiModel
 import io.github.hanihashemi.eggmaster.ui.models.EggSize
 import io.github.hanihashemi.eggmaster.ui.models.EggTemperature
+import io.github.hanihashemi.eggmaster.ui.models.EggTimerUiModel
 import io.github.hanihashemi.eggmaster.ui.models.UiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -28,25 +34,44 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val boilingTimeCalcUseCase: BoilingTimeCalcUseCase,
+    private val preferences: EggMasterPreferences,
 ) : ViewModel() {
 
     private val _viewEvent: Channel<ViewEvent> = Channel()
     val viewEvent = _viewEvent.receiveAsFlow()
-    private val internalState: MutableStateFlow<InternalState> = MutableStateFlow(InternalState())
+    private val internalState: MutableStateFlow<InternalState> = MutableStateFlow(
+        InternalState(
+            eggDetails = getEggDetailsFromPreferences(),
+            eggTimer = EggTimerUiModel(),
+            isTimerServiceRunning = false,
+        )
+    )
     val viewState: StateFlow<UiState> = internalState
         .map { internalState -> generateUiState(internalState) }
         .distinctUntilChanged()
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),
-            initialValue = UiState(),
+            initialValue = UiState(
+                eggDetails = getEggDetailsFromPreferences(),
+                startDestination = getStartDestination(),
+                eggTimer = EggTimerUiModel(),
+            ),
         )
+
+    private fun init(isTimerServiceRunning: Boolean) {
+        internalState.update {
+            it.copy(isTimerServiceRunning = isTimerServiceRunning)
+        }
+    }
 
     private fun generateUiState(internalState: InternalState): UiState {
         return UiState(
             tutorialCurrentStep = internalState.tutorialCurrentStep,
             eggDetails = internalState.eggDetails,
             dropEgg = internalState.tutorialCurrentStep >= 1,
+            startDestination = getStartDestination(),
+            eggTimer = internalState.eggTimer,
         )
     }
 
@@ -58,8 +83,31 @@ class MainViewModel @Inject constructor(
             is ViewAction.OnEggSizePressed -> onEggSizePressed(action.eggSize)
             is ViewAction.OnEggCountChanged -> onEggCountChanged(action.eggCount)
             is ViewAction.OnEggBoiledTypePressed -> onEggBoilPressed(action.eggBoiledType)
+            is ViewAction.UpdateBoilingTime -> updateBoilingTime()
+            is ViewAction.StartTimer -> startTimer()
+            is ViewAction.UpdateTimber -> updateTimer(action.time)
+            is ViewAction.Init -> init(action.isTimerServiceRunning)
         }
     }
+
+    private fun updateTimer(time: Int) {
+        internalState.update {
+            it.copy(eggTimer = it.eggTimer.copy(time = time))
+        }
+    }
+
+    private fun startTimer() {
+        val boilingTime = internalState.value.eggDetails.boilingTime
+        _viewEvent.trySend(ViewEvent.StartTimerService(boilingTime))
+    }
+
+    private fun getStartDestination(): String = when {
+        internalState.value.isTimerServiceRunning -> Screen.Timer.route
+        preferences.getUserInfo().userStep == ScreenStep.TUTORIAL -> Screen.Intro.route
+        else -> Screen.BoilDetail.route
+    }
+
+    private fun getEggDetailsFromPreferences() = preferences.getEggDetails().toUiModel()
 
     private fun onEggBoilPressed(eggBoiledType: EggBoiledType) {
         internalState.update {
@@ -92,6 +140,9 @@ class MainViewModel @Inject constructor(
     private fun onTutorialNextPressed() {
         val currentStep = internalState.value.tutorialCurrentStep
         if (currentStep == 2) {
+            viewModelScope.launch(Dispatchers.IO) {
+                preferences.saveUserInfo(UserInfoDataModel(ScreenStep.EGG_DETAILS))
+            }
             _viewEvent.trySend(ViewEvent.OpenNextPage)
         } else {
             internalState.value = internalState.value.copy(tutorialCurrentStep = currentStep + 1)
@@ -108,8 +159,9 @@ class MainViewModel @Inject constructor(
     }
 
     private fun updateBoilingTime() {
-        viewModelScope.launch(Dispatchers.Default) {
+        viewModelScope.launch(Dispatchers.IO) {
             val eggDetails = internalState.value.eggDetails
+            preferences.saveEggDetails(eggDetails.toDataModel())
             val boilingTime = boilingTimeCalcUseCase.run(
                 BoilingTimeCalcUseCase.Params(
                     eggCount = eggDetails.count,
@@ -127,7 +179,9 @@ class MainViewModel @Inject constructor(
 
     data class InternalState(
         val tutorialCurrentStep: Int = 0,
-        val eggDetails: EggDetailsUiModel = EggDetailsUiModel(),
+        val eggDetails: EggDetailsUiModel,
+        val eggTimer: EggTimerUiModel,
+        val isTimerServiceRunning: Boolean,
     )
 
     sealed class ViewAction {
@@ -137,9 +191,14 @@ class MainViewModel @Inject constructor(
         data class OnEggSizePressed(val eggSize: EggSize) : ViewAction()
         data class OnEggCountChanged(val eggCount: Int) : ViewAction()
         data class OnEggBoiledTypePressed(val eggBoiledType: EggBoiledType) : ViewAction()
+        data object UpdateBoilingTime : ViewAction()
+        data object StartTimer : ViewAction()
+        data class UpdateTimber(val time: Int) : ViewAction()
+        data class Init(val isTimerServiceRunning: Boolean) : ViewAction()
     }
 
     sealed class ViewEvent {
+        data class StartTimerService(val boilingTime: Int) : ViewEvent()
         data object NavigateBack : ViewEvent()
         data object OpenNextPage : ViewEvent()
     }

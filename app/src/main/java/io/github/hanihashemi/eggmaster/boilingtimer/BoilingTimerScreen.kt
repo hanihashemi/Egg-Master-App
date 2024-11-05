@@ -1,5 +1,6 @@
 package io.github.hanihashemi.eggmaster.boilingtimer
 
+import android.app.AlertDialog
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
@@ -26,6 +27,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,18 +36,29 @@ import io.github.hanihashemi.eggmaster.components.BoilingPot
 import io.github.hanihashemi.eggmaster.components.BottomBarButton
 import io.github.hanihashemi.eggmaster.components.TopBar
 import io.github.hanihashemi.eggmaster.extensions.formatSecondsToMinutes
+import io.github.hanihashemi.eggmaster.ui.models.EggDetailsUiModel
+import io.github.hanihashemi.eggmaster.ui.models.EggTimerUiModel
+import io.github.hanihashemi.eggmaster.ui.models.UiState
 import io.github.hanihashemi.eggmaster.ui.theme.ClockPointerColor
 import io.github.hanihashemi.eggmaster.ui.theme.Dimens
 import io.github.hanihashemi.eggmaster.ui.theme.EggMasterTheme
-import kotlinx.coroutines.delay
 
 @Composable
-fun BoilingTimerScreen() {
+fun BoilingTimerScreen(state: UiState) {
+    val context = LocalContext.current
+
     Scaffold(
         topBar = { TopBar(title = "Boiling Timer") },
         bottomBar = {
-            BottomBarButton("Let's Start") {
-                // TODO: Implement on click
+            BottomBarButton("Cancel") {
+                AlertDialog.Builder(context)
+                    .setTitle("Notification Permission Needed")
+                    .setMessage("We need this permission to display notifications and start the timer.")
+                    .setPositiveButton("OK") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .create()
+                    .show()
             }
         },
         containerColor = MaterialTheme.colorScheme.surface,
@@ -58,7 +71,7 @@ fun BoilingTimerScreen() {
         ) {
             BoilingPot(dropEgg = true)
             Text(
-                text = 190.formatSecondsToMinutes(),
+                text = state.eggTimer.time.formatSecondsToMinutes(),
                 modifier = Modifier
                     .padding(
                         top = Dimens.PaddingLarge,
@@ -68,7 +81,7 @@ fun BoilingTimerScreen() {
                     color = Color.White,
                 )
             )
-            ClockFace()
+            ClockFace(state.eggTimer.time)
             Spacer(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -95,18 +108,15 @@ fun BoilingTimerScreen() {
 }
 
 @Composable
-private fun ClockFace() {
+private fun ClockFace(time: Int) {
     var rotationAngel by remember { mutableFloatStateOf(0f) }
     val animatedRotationAngel by animateFloatAsState(
         targetValue = rotationAngel,
         label = "Clock face rotation"
     )
 
-    LaunchedEffect(Unit) {
-        while (true) {
+    LaunchedEffect(time) {
             rotationAngel += 6f
-            delay(1000) // 1 second
-        }
     }
 
     CustomClockLayout(

@@ -17,6 +17,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -32,17 +33,22 @@ import io.github.hanihashemi.eggmaster.MainViewModel.ViewAction.OnEggBoiledTypeP
 import io.github.hanihashemi.eggmaster.MainViewModel.ViewAction.OnEggCountChanged
 import io.github.hanihashemi.eggmaster.MainViewModel.ViewAction.OnEggSizePressed
 import io.github.hanihashemi.eggmaster.MainViewModel.ViewAction.OnEggTemperaturePressed
+import io.github.hanihashemi.eggmaster.MainViewModel.ViewAction.StartTimer
+import io.github.hanihashemi.eggmaster.MainViewModel.ViewAction.UpdateBoilingTime
 import io.github.hanihashemi.eggmaster.R
 import io.github.hanihashemi.eggmaster.components.OutlinedToggleButton
 import io.github.hanihashemi.eggmaster.components.OutlinedToggleImageButton
 import io.github.hanihashemi.eggmaster.components.TopBar
 import io.github.hanihashemi.eggmaster.eggboildetails.components.BoilingTimeBottomBar
 import io.github.hanihashemi.eggmaster.ui.models.EggBoiledType
+import io.github.hanihashemi.eggmaster.ui.models.EggDetailsUiModel
 import io.github.hanihashemi.eggmaster.ui.models.EggSize
 import io.github.hanihashemi.eggmaster.ui.models.EggTemperature
+import io.github.hanihashemi.eggmaster.ui.models.EggTimerUiModel
 import io.github.hanihashemi.eggmaster.ui.models.UiState
 import io.github.hanihashemi.eggmaster.ui.theme.Dimens
 import io.github.hanihashemi.eggmaster.ui.theme.EggMasterTheme
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,9 +56,14 @@ fun EggBoilDetailsScreen(
     state: UiState,
     dispatch: (MainViewModel.ViewAction) -> Unit,
 ) {
+    LaunchedEffect(Unit) {
+        delay(500)
+        dispatch(UpdateBoilingTime)
+    }
+
     Scaffold(
         topBar = { TopBar("Egg Boil Details") },
-        bottomBar = { BoilingTimeBottomBar(state) },
+        bottomBar = { BoilingTimeBottomBar(state) { dispatch(StartTimer) } },
     ) { paddingValues ->
         Column(
             modifier = Modifier
