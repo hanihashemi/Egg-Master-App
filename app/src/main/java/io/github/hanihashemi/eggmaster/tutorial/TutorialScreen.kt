@@ -23,6 +23,8 @@ import io.github.hanihashemi.eggmaster.R
 import io.github.hanihashemi.eggmaster.components.BoilingPot
 import io.github.hanihashemi.eggmaster.tutorial.components.InformationCards
 import io.github.hanihashemi.eggmaster.tutorial.components.PageIndicator
+import io.github.hanihashemi.eggmaster.ui.models.EggDetailsUiModel
+import io.github.hanihashemi.eggmaster.ui.models.EggTimerUiModel
 import io.github.hanihashemi.eggmaster.ui.models.UiState
 import io.github.hanihashemi.eggmaster.ui.theme.Dimens
 import io.github.hanihashemi.eggmaster.ui.theme.EggMasterTheme
@@ -82,7 +84,11 @@ private fun BottomBar(state: UiState, dispatch: (MainViewModel.ViewAction) -> Un
 @Composable
 fun TutorialScreenPreview() {
     EggMasterTheme {
-        TutorialScreen(state = UiState(), dispatch = {})
+        TutorialScreen(state = UiState(
+            eggDetails = EggDetailsUiModel(),
+            startDestination = "",
+            eggTimer = EggTimerUiModel(),
+        ), dispatch = {})
     }
 }
 
@@ -90,7 +96,14 @@ fun TutorialScreenPreview() {
 @Composable
 fun TutorialScreenNexus_10_Preview() {
     EggMasterTheme {
-        TutorialScreen(state = UiState(), dispatch = {})
+        TutorialScreen(
+            state = UiState(
+                eggDetails = EggDetailsUiModel(),
+                startDestination = "",
+                eggTimer = EggTimerUiModel(),
+            ),
+            dispatch = {}
+        )
     }
 }
 
@@ -98,6 +111,10 @@ fun TutorialScreenNexus_10_Preview() {
 @Composable
 fun TutorialScreenNexus_5_Preview() {
     EggMasterTheme {
-        TutorialScreen(state = UiState(), dispatch = {})
+        TutorialScreen(state = UiState(
+            eggDetails = EggDetailsUiModel(),
+            startDestination = "",
+            eggTimer = EggTimerUiModel(),
+        ), dispatch = {})
     }
 }

@@ -168,7 +168,13 @@ fun CustomClockLayout(
 @Composable
 private fun BoilingTimerScreenSmallSizePreview() {
     EggMasterTheme {
-        BoilingTimerScreen()
+        BoilingTimerScreen(
+            state = UiState(
+                eggDetails = EggDetailsUiModel(),
+                startDestination = "",
+                eggTimer = EggTimerUiModel(),
+            ),
+        )
     }
 }
 
@@ -176,7 +182,13 @@ private fun BoilingTimerScreenSmallSizePreview() {
 @Composable
 private fun BoilingTimerScreenMediumSizePreview() {
     EggMasterTheme {
-        BoilingTimerScreen()
+        BoilingTimerScreen(
+            state = UiState(
+                eggDetails = EggDetailsUiModel(),
+                startDestination = "",
+                eggTimer = EggTimerUiModel(),
+            ),
+        )
     }
 }
 
@@ -184,6 +196,12 @@ private fun BoilingTimerScreenMediumSizePreview() {
 @Composable
 private fun BoilingTimerScreenLargeSizePreview() {
     EggMasterTheme {
-        BoilingTimerScreen()
+        BoilingTimerScreen(
+            state = UiState(
+                eggDetails = EggDetailsUiModel(),
+                startDestination = "",
+                eggTimer = EggTimerUiModel(),
+            ),
+        )
     }
 }

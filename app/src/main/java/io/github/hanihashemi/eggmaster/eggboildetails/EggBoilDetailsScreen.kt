@@ -168,6 +168,10 @@ private fun HeadLine(text: String = "Egg ", textBold: String) {
 @Preview
 private fun EggBoilDetailsScreenPreview() {
     EggMasterTheme {
-        EggBoilDetailsScreen(state = UiState(), dispatch = { })
+        EggBoilDetailsScreen(state = UiState(
+            eggDetails = EggDetailsUiModel(),
+            startDestination = "",
+            eggTimer = EggTimerUiModel(),
+        ), dispatch = { })
     }
 }
