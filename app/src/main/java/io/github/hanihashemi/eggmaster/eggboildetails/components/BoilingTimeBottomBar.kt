@@ -34,13 +34,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.github.hanihashemi.eggmaster.extensions.formatSecondsToMinutes
+import io.github.hanihashemi.eggmaster.ui.models.EggDetailsUiModel
+import io.github.hanihashemi.eggmaster.ui.models.EggTimerUiModel
 import io.github.hanihashemi.eggmaster.ui.models.UiState
 import io.github.hanihashemi.eggmaster.ui.theme.Dimens
 import io.github.hanihashemi.eggmaster.ui.theme.EggMasterTheme
 import io.github.hanihashemi.eggmaster.ui.theme.Shapes
 
 @Composable
-fun BoilingTimeBottomBar(state: UiState) {
+fun BoilingTimeBottomBar(state: UiState, onClick: () -> Unit = {}) {
 
     val animatedSeconds by animateIntAsState(
         targetValue = state.eggDetails.boilingTime,
@@ -99,7 +101,7 @@ fun BoilingTimeBottomBar(state: UiState) {
                     .size(50.dp)
                     .clip(CircleShape)
                     .background(MaterialTheme.colorScheme.surface)
-                    .clickable { /* TODO */ },
+                    .clickable { onClick() },
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
@@ -116,6 +118,13 @@ fun BoilingTimeBottomBar(state: UiState) {
 @Preview
 fun BottomBarButtonPreview() {
     EggMasterTheme {
-        BoilingTimeBottomBar(state = UiState())
+        BoilingTimeBottomBar(
+            state = UiState(
+                eggDetails = EggDetailsUiModel(),
+                startDestination = "",
+                eggTimer = EggTimerUiModel(),
+            ),
+            onClick = {},
+        )
     }
 }
