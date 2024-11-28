@@ -1,4 +1,4 @@
-package io.github.hanihashemi.eggmaster.tutorial.components
+package io.github.hanihashemi.eggmaster.screens.tutorial.components
 
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.Spring

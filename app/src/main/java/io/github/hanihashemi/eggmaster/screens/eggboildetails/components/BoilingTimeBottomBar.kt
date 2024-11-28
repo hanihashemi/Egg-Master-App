@@ -1,4 +1,4 @@
-package io.github.hanihashemi.eggmaster.eggboildetails.components
+package io.github.hanihashemi.eggmaster.screens.eggboildetails.components
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateIntAsState

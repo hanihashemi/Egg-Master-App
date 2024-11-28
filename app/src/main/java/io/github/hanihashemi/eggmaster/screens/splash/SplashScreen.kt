@@ -1,4 +1,4 @@
-package io.github.hanihashemi.eggmaster.splash
+package io.github.hanihashemi.eggmaster.screens.splash
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

@@ -10,10 +10,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import io.github.hanihashemi.eggmaster.boilingtimer.BoilingTimerScreen
-import io.github.hanihashemi.eggmaster.eggboildetails.EggBoilDetailsScreen
-import io.github.hanihashemi.eggmaster.splash.SplashScreen
-import io.github.hanihashemi.eggmaster.tutorial.TutorialScreen
+import io.github.hanihashemi.eggmaster.screens.boilingtimer.BoilingTimerScreen
+import io.github.hanihashemi.eggmaster.screens.eggboildetails.EggBoilDetailsScreen
+import io.github.hanihashemi.eggmaster.screens.splash.SplashScreen
+import io.github.hanihashemi.eggmaster.screens.tutorial.TutorialScreen
 import io.github.hanihashemi.eggmaster.ui.models.UiState
 
 @Composable

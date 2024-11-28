@@ -1,4 +1,4 @@
-package io.github.hanihashemi.eggmaster.tutorial
+package io.github.hanihashemi.eggmaster.screens.tutorial
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,8 +21,8 @@ import androidx.compose.ui.unit.dp
 import io.github.hanihashemi.eggmaster.MainViewModel
 import io.github.hanihashemi.eggmaster.R
 import io.github.hanihashemi.eggmaster.components.BoilingPot
-import io.github.hanihashemi.eggmaster.tutorial.components.InformationCards
-import io.github.hanihashemi.eggmaster.tutorial.components.PageIndicator
+import io.github.hanihashemi.eggmaster.screens.tutorial.components.InformationCards
+import io.github.hanihashemi.eggmaster.screens.tutorial.components.PageIndicator
 import io.github.hanihashemi.eggmaster.ui.models.EggDetailsUiModel
 import io.github.hanihashemi.eggmaster.ui.models.EggTimerUiModel
 import io.github.hanihashemi.eggmaster.ui.models.UiState

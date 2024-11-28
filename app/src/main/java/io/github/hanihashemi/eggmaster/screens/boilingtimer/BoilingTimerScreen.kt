@@ -1,4 +1,4 @@
-package io.github.hanihashemi.eggmaster.boilingtimer
+package io.github.hanihashemi.eggmaster.screens.boilingtimer
 
 import android.app.AlertDialog
 import androidx.compose.animation.core.animateFloatAsState

@@ -36,7 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import io.github.hanihashemi.eggmaster.R
-import io.github.hanihashemi.eggmaster.tutorial.components.EggAnimated
+import io.github.hanihashemi.eggmaster.screens.tutorial.components.EggAnimated
 import io.github.hanihashemi.eggmaster.ui.theme.EggMasterTheme
 import io.github.hanihashemi.eggmaster.ui.theme.Shapes
 import kotlin.math.pow

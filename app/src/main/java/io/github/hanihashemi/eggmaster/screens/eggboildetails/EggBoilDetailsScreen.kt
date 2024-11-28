@@ -1,4 +1,4 @@
-package io.github.hanihashemi.eggmaster.eggboildetails
+package io.github.hanihashemi.eggmaster.screens.eggboildetails
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -39,7 +39,7 @@ import io.github.hanihashemi.eggmaster.R
 import io.github.hanihashemi.eggmaster.components.OutlinedToggleButton
 import io.github.hanihashemi.eggmaster.components.OutlinedToggleImageButton
 import io.github.hanihashemi.eggmaster.components.TopBar
-import io.github.hanihashemi.eggmaster.eggboildetails.components.BoilingTimeBottomBar
+import io.github.hanihashemi.eggmaster.screens.eggboildetails.components.BoilingTimeBottomBar
 import io.github.hanihashemi.eggmaster.ui.models.EggBoiledType
 import io.github.hanihashemi.eggmaster.ui.models.EggDetailsUiModel
 import io.github.hanihashemi.eggmaster.ui.models.EggSize
