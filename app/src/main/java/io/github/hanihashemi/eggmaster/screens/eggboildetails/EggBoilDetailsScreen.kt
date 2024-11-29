@@ -15,6 +15,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -115,9 +116,15 @@ fun EggBoilDetailsScreen(
                     })
             }
             HeadLine(textBold = "Count")
-            Slider(modifier = Modifier.fillMaxWidth(),
+            Slider(
+                modifier = Modifier.fillMaxWidth(),
                 value = state.eggDetails.count.toFloat(),
                 valueRange = 1f..10f,
+                colors = SliderDefaults.colors(
+                    thumbColor = MaterialTheme.colorScheme.primary,
+                    activeTrackColor = MaterialTheme.colorScheme.primary,
+                    inactiveTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+                ),
                 onValueChange = {
                     dispatch(OnEggCountChanged(it.toInt()))
                 },
