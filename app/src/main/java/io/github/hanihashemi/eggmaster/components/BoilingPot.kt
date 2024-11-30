@@ -36,7 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import io.github.hanihashemi.eggmaster.R
-import io.github.hanihashemi.eggmaster.screens.tutorial.components.EggAnimated
+import io.github.hanihashemi.eggmaster.screens.tutorial.components.EggDropIntoPot
 import io.github.hanihashemi.eggmaster.ui.theme.EggMasterTheme
 import io.github.hanihashemi.eggmaster.ui.theme.Shapes
 import kotlin.math.pow
@@ -80,7 +80,7 @@ fun BoilingPot(modifier: Modifier = Modifier, dropEgg: Boolean) {
                 .size(width = 110.dp, height = 60.dp)
                 .offset(y = 15.dp)
         )
-        EggAnimated(dropEgg)
+        EggDropIntoPot(dropEgg)
     }
 }
 

@@ -32,7 +32,7 @@ private const val EGG_ALPHA_ANIMATION_LABEL = "Egg Alpha Animation"
 private const val EGG_POSITION_ANIMATION_LABEL = "Egg Position Animation"
 
 @Composable
-fun EggAnimated(dropEgg: Boolean) {
+fun EggDropIntoPot(dropEgg: Boolean) {
     var eggAlpha by remember { mutableFloatStateOf(0f) }
 
     val animatedEggAlpha by animateFloatAsState(
