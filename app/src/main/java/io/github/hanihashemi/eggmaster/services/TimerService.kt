@@ -1,4 +1,4 @@
-package io.github.hanihashemi.eggmaster.service
+package io.github.hanihashemi.eggmaster.services
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -60,6 +60,7 @@ class TimerService : Service() {
                 delay(1000) // delay for 1 second
                 remainingTime -= 1
             }
+            sendTimeUpdate()
             showCompletionNotification()
             stopSelf()
         }
