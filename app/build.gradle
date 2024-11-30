@@ -85,6 +85,9 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-perf")
 
+    // Third-party libraries
+    implementation 'nl.dionsegijn:konfetti-compose:2.0.4'
+
     // Test
     testImplementation "androidx.arch.core:core-testing:2.2.0"
     testImplementation "org.jetbrains.kotlin:kotlin-test:1.9.22"
