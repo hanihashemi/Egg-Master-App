@@ -7,17 +7,25 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ServiceInfo
+import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
+import androidx.core.app.ServiceCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.hanihashemi.eggmaster.MainActivity
 import io.github.hanihashemi.eggmaster.R
+import io.github.hanihashemi.eggmaster.data.preferences.EggMasterPreferences
 import io.github.hanihashemi.eggmaster.extensions.formatSecondsToMinutes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class TimerService : Service() {
 
     companion object {
@@ -30,6 +38,9 @@ class TimerService : Service() {
     private var remainingTime: Int = 0
     private var job: Job? = null
 
+    @Inject
+    lateinit var preferences: EggMasterPreferences
+
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
@@ -37,18 +48,33 @@ class TimerService : Service() {
     override fun onCreate() {
         super.onCreate()
         createNotificationChannel()
-        startForeground(1, createNotification("Timer started", 0, 0))
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        startForeground()
         val timeInMillis = intent?.getIntExtra(BOILING_TIME_PARAM, 0) ?: 0
         startTimer(timeInMillis)
         return START_NOT_STICKY
     }
 
+    private fun startForeground() {
+        val notification = createNotification("Timer started", 0, 0)
+        val notificationType = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
+        } else 0
+
+        ServiceCompat.startForeground(
+            this@TimerService,
+            1,
+            notification,
+            notificationType
+        )
+    }
+
     private fun startTimer(timeInMillis: Int) {
         remainingTime = timeInMillis
         job = CoroutineScope(Dispatchers.Default).launch {
+            preferences.saveStartTimerServiceData()
             while (remainingTime > 0) {
                 val progress = timeInMillis - remainingTime
                 sendTimeUpdate()
@@ -62,6 +88,7 @@ class TimerService : Service() {
             }
             sendTimeUpdate()
             showCompletionNotification()
+            preferences.saveEndTimerServiceData()
             stopSelf()
         }
     }
@@ -69,7 +96,7 @@ class TimerService : Service() {
     private fun sendTimeUpdate() {
         val intent = Intent(TIME_UPDATE_ACTION)
         intent.putExtra(REMAINING_TIME, remainingTime)
-        sendBroadcast(intent)
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
     }
 
     override fun onDestroy() {

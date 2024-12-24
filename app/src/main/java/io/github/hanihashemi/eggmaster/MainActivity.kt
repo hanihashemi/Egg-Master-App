@@ -18,14 +18,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import io.github.hanihashemi.eggmaster.MainViewModel.ViewAction.Init
 import io.github.hanihashemi.eggmaster.MainViewModel.ViewAction.UpdateTimber
-import io.github.hanihashemi.eggmaster.service.TimerService
-import io.github.hanihashemi.eggmaster.service.TimerService.Companion.BOILING_TIME_PARAM
-import io.github.hanihashemi.eggmaster.service.TimerService.Companion.REMAINING_TIME
+import io.github.hanihashemi.eggmaster.services.TimerService
+import io.github.hanihashemi.eggmaster.services.TimerService.Companion.BOILING_TIME_PARAM
+import io.github.hanihashemi.eggmaster.services.TimerService.Companion.REMAINING_TIME
+import io.github.hanihashemi.eggmaster.services.TimerService.Companion.TIME_UPDATE_ACTION
 import io.github.hanihashemi.eggmaster.ui.theme.EggMasterTheme
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -49,22 +50,36 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.dispatch(Init(isTimerServiceRunning()))
+        viewModel.dispatch(MainViewModel.ViewAction.Init(isTimerServiceRunning()))
         observeViewEvent()
+        listenToTimerService()
+
         setContent {
             val state by viewModel.viewState.collectAsState()
             navController = rememberNavController()
+
             EggMasterTheme {
-                EggMasterApp(navController, viewModel, state)
+                EggMasterApp(
+                    navController = navController,
+                    viewModel = viewModel,
+                    state = state,
+                )
             }
         }
+    }
 
+    private fun listenToTimerService() {
         timerUpdateReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 val remainingTime = intent?.getIntExtra(REMAINING_TIME, 0) ?: 0
                 viewModel.dispatch(UpdateTimber(remainingTime))
             }
         }
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+            timerUpdateReceiver,
+            IntentFilter(TIME_UPDATE_ACTION)
+        )
     }
 
     private fun observeViewEvent() {
@@ -82,6 +97,29 @@ class MainActivity : ComponentActivity() {
                     is MainViewModel.ViewEvent.StartTimerService -> {
                         boilingTime = viewEvent.boilingTime
                         askNotificationPermissionAndStartTimerService()
+                    }
+
+                    is MainViewModel.ViewEvent.NavigateTo -> {
+                        if (viewEvent.clearStack) {
+                            navController.navigate(viewEvent.route) {
+                                popUpTo(Screen.Intro.Destination.Title.route) {
+                                    inclusive = false
+                                }
+                            }
+                        } else {
+                            navController.navigate(viewEvent.route)
+                        }
+                    }
+
+                    is MainViewModel.ViewEvent.CancelTimer -> {
+                        val intent = Intent(this@MainActivity, TimerService::class.java)
+                        stopService(intent)
+                        viewModel.dispatch(MainViewModel.ViewAction.ResetTimerServiceEndTime)
+                        navController.navigate(Screen.Intro.route) {
+                            popUpTo(Screen.Intro.route) {
+                                inclusive = true
+                            }
+                        }
                     }
                 }
             }
@@ -108,7 +146,7 @@ class MainActivity : ComponentActivity() {
             putExtra(BOILING_TIME_PARAM, boilingTime)
         }
         navController.navigate(Screen.Timer.route)
-        startService(intent)
+        startForegroundService(intent)
     }
 
     private fun showPermissionRationaleDialog() {
@@ -122,20 +160,9 @@ class MainActivity : ComponentActivity() {
             .show()
     }
 
-    override fun onStart() {
-        super.onStart()
-        val intentFilter = IntentFilter("TIMER_UPDATED")
-        ContextCompat.registerReceiver(
-            this,
-            timerUpdateReceiver,
-            intentFilter,
-            ContextCompat.RECEIVER_NOT_EXPORTED
-        )
-    }
-
-    override fun onStop() {
-        super.onStop()
-        unregisterReceiver(timerUpdateReceiver)
+    override fun onDestroy() {
+        super.onDestroy()
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(timerUpdateReceiver)
     }
 
     private fun isTimerServiceRunning(): Boolean {
