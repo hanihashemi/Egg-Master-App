@@ -20,10 +20,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.getSystemService
 import io.github.hanihashemi.eggmaster.MainViewModel
+import io.github.hanihashemi.eggmaster.R
 import io.github.hanihashemi.eggmaster.components.BottomBarButton
 import io.github.hanihashemi.eggmaster.screens.boilingdone.components.ShakingEgg
 import io.github.hanihashemi.eggmaster.ui.theme.Dimens
@@ -48,7 +50,7 @@ fun BoilingDoneScreen(dispatch: (MainViewModel.ViewAction) -> Unit) {
 
     Scaffold(
         bottomBar = {
-            BottomBarButton("Done") {
+            BottomBarButton(stringResource(R.string.egg_boil_result_screen_button_done)) {
                 dispatch(MainViewModel.ViewAction.OnDonePressed)
             }
         },
@@ -76,14 +78,12 @@ fun BoilingDoneScreen(dispatch: (MainViewModel.ViewAction) -> Unit) {
                 )
 
                 Text(
-                    text = "Your eggs are ready!",
+                    text = stringResource(R.string.egg_boil_result_screen_title),
                     style = MaterialTheme.typography.bodyLarge,
                 )
 
                 Text(
-                    text = "Enjoy your meal, and remember: a pinch of salt makes it even better." +
-                            "Feeling creative? Try topping it with some herbs or " +
-                            "a splash of olive oil!",
+                    text = stringResource(R.string.egg_boil_result_screen_description),
                     modifier = Modifier
                         .padding(top = Dimens.PaddingSmall)
                         .padding(horizontal = Dimens.PaddingLarge),

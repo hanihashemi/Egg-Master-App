@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.hanihashemi.eggmaster.MainViewModel
@@ -49,17 +50,24 @@ fun BoilingTimerScreen(state: UiState, dispatch: (MainViewModel.ViewAction) -> U
     val context = LocalContext.current
 
     Scaffold(
-        topBar = { TopBar(titleString = "Boiling Timer") },
+        topBar = { TopBar(titleString = stringResource(R.string.egg_boil_timer_screen_title)) },
         bottomBar = {
-            BottomBarButton("Cancel") {
+            BottomBarButton(stringResource(R.string.egg_boil_timer_screen_button_cancel)) {
+                val title = context.getString(R.string.egg_boil_timer_screen_dialog_title)
+                val message = context.getString(R.string.egg_boil_timer_screen_dialog_message)
+                val positiveButton =
+                    context.getString(R.string.egg_boil_timer_screen_dialog_button_positive)
+                val negativeButton =
+                    context.getString(R.string.egg_boil_timer_screen_dialog_button_negative)
+
                 AlertDialog.Builder(context)
-                    .setTitle("Cancel Timer")
-                    .setMessage("Do you want to cancel the timer?")
-                    .setPositiveButton("Yes") { dialog, _ ->
+                    .setTitle(title)
+                    .setMessage(message)
+                    .setPositiveButton(positiveButton) { dialog, _ ->
                         dialog.dismiss()
                         dispatch(MainViewModel.ViewAction.CancelTimer)
                     }
-                    .setNegativeButton("No") { dialog, _ ->
+                    .setNegativeButton(negativeButton) { dialog, _ ->
                         dialog.dismiss()
                     }
                     .create()
@@ -95,12 +103,11 @@ fun BoilingTimerScreen(state: UiState, dispatch: (MainViewModel.ViewAction) -> U
                     .background(Color.White.copy(alpha = 0.2f))
             )
             Text(
-                text = "Boiling Time",
+                text = stringResource(R.string.egg_boil_timer_screen_subtitle),
                 style = MaterialTheme.typography.bodyLarge
             )
             Text(
-                text = "almost there! Your eggs will be soft, medium, or " +
-                        "hard-boiled just the way you like. Keep watching the timer!",
+                text = stringResource(R.string.egg_boil_timer_screen_label_description),
                 modifier = Modifier
                     .padding(top = Dimens.PaddingSmall)
                     .padding(horizontal = Dimens.PaddingNormal),

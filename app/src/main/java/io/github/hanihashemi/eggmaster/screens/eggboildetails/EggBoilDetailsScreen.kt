@@ -24,6 +24,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -67,7 +68,7 @@ fun EggBoilDetailsScreen(
     Scaffold(
         topBar = {
             TopBar(
-                titleString = "Egg Boil Details",
+                titleString = stringResource(R.string.egg_boil_details_screen_title),
                 onBackClicked = { dispatch(MainViewModel.ViewAction.NavigateBack) },
             )
         },
@@ -86,50 +87,53 @@ fun EggBoilDetailsScreen(
                     .padding(Dimens.PaddingNormal)
                     .verticalScroll(rememberScrollState()),
             ) {
-                HeadLine(textBold = "Temperature", noTopPadding = true)
+                HeadLine(
+                    textBold = stringResource(R.string.egg_boil_details_screen_label_temperature),
+                    noTopPadding = true
+                )
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceAround,
                 ) {
                     OutlinedToggleButton(modifier = Modifier.widthIn(90.dp),
-                        text = "Fridge temperature",
+                        text = stringResource(R.string.egg_boil_details_screen_button_fridge_temperature),
                         isSelect = state.eggDetails.temperature == EggTemperature.FRIDGE,
                         onClick = {
                             dispatch(OnEggTemperaturePressed(EggTemperature.FRIDGE))
                         })
                     Spacer(modifier = Modifier.width(Dimens.PaddingXXSmall))
                     OutlinedToggleButton(modifier = Modifier.widthIn(90.dp),
-                        text = "Room temperature",
+                        text = stringResource(R.string.egg_boil_details_screen_button_room_temperature),
                         isSelect = state.eggDetails.temperature == EggTemperature.ROOM,
                         onClick = {
                             dispatch(OnEggTemperaturePressed(EggTemperature.ROOM))
                         })
                 }
-                HeadLine(textBold = "Size")
+                HeadLine(textBold = stringResource(R.string.egg_boil_details_screen_label_size))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceAround,
                 ) {
                     OutlinedToggleButton(modifier = Modifier.widthIn(90.dp),
-                        text = "S",
+                        text = stringResource(R.string.egg_boil_details_screen_button_size_small),
                         isSelect = state.eggDetails.size == EggSize.Small,
                         onClick = {
                             dispatch(OnEggSizePressed(EggSize.Small))
                         })
                     OutlinedToggleButton(modifier = Modifier.widthIn(90.dp),
-                        text = "M",
+                        text = stringResource(R.string.egg_boil_details_screen_button_size_medium),
                         isSelect = state.eggDetails.size == EggSize.Medium,
                         onClick = {
                             dispatch(OnEggSizePressed(EggSize.Medium))
                         })
                     OutlinedToggleButton(modifier = Modifier.widthIn(90.dp),
-                        text = "L",
+                        text = stringResource(R.string.egg_boil_details_screen_button_size_large),
                         isSelect = state.eggDetails.size == EggSize.Large,
                         onClick = {
                             dispatch(OnEggSizePressed(EggSize.Large))
                         })
                 }
-                HeadLine(textBold = "Count")
+                HeadLine(textBold = stringResource(R.string.egg_boil_details_screen_label_count))
                 Slider(modifier = Modifier.fillMaxWidth(),
                     value = state.eggDetails.count.toFloat(),
                     valueRange = 1f..10f,
@@ -146,7 +150,7 @@ fun EggBoilDetailsScreen(
                             Image(
                                 modifier = Modifier.width(30.dp),
                                 painter = painterResource(id = R.drawable.ic_egg),
-                                contentDescription = "Boiling Pot",
+                                contentDescription = stringResource(R.string.egg_boil_details_screen_slider_content_description),
                             )
 
                             Text(
@@ -160,20 +164,20 @@ fun EggBoilDetailsScreen(
                             )
                         }
                     })
-                HeadLine(textBold = "Boiled Type")
+                HeadLine(textBold = stringResource(R.string.egg_boil_details_screen_label_boiled_type))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceAround,
                 ) {
-                    OutlinedToggleImageButton(text = "Soft",
+                    OutlinedToggleImageButton(text = stringResource(R.string.egg_boil_details_screen_button_type_soft),
                         iconId = R.drawable.ic_egg_boiled_soft,
                         isSelect = state.eggDetails.boiledType == EggBoiledType.SOFT,
                         onClick = { dispatch(OnEggBoiledTypePressed(EggBoiledType.SOFT)) })
-                    OutlinedToggleImageButton(text = "Medium",
+                    OutlinedToggleImageButton(text = stringResource(R.string.egg_boil_details_screen_button_size_medium),
                         iconId = R.drawable.ic_egg_boiled_medium,
                         isSelect = state.eggDetails.boiledType == EggBoiledType.MEDIUM,
                         onClick = { dispatch(OnEggBoiledTypePressed(EggBoiledType.MEDIUM)) })
-                    OutlinedToggleImageButton(text = "Hard",
+                    OutlinedToggleImageButton(text = stringResource(R.string.egg_boil_details_screen_button_size_large),
                         iconId = R.drawable.ic_egg_boiled_hard,
                         isSelect = state.eggDetails.boiledType == EggBoiledType.HARD,
                         onClick = { dispatch(OnEggBoiledTypePressed(EggBoiledType.HARD)) })
@@ -184,12 +188,13 @@ fun EggBoilDetailsScreen(
 }
 
 @Composable
-private fun HeadLine(text: String = "Egg ", textBold: String, noTopPadding: Boolean = false) {
+private fun HeadLine(textBold: String, noTopPadding: Boolean = false) {
+    val textPrefix = stringResource(R.string.egg_boil_details_screen_label_headline_prefix)
     Text(modifier = Modifier.padding(
         bottom = Dimens.PaddingNormal,
         top = if (noTopPadding) 0.dp else Dimens.PaddingXXLarge,
     ), style = MaterialTheme.typography.headlineMedium, text = buildAnnotatedString {
-        append(text)
+        append(textPrefix)
         withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
             append(textBold)
         }

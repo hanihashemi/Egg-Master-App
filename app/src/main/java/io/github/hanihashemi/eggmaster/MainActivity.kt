@@ -150,10 +150,17 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun showPermissionRationaleDialog() {
+        val title =
+            baseContext.getString(R.string.main_activity_permission_request_background_service_title)
+        val message =
+            baseContext.getString(R.string.main_activity_permission_request_background_service_message)
+        val positiveButton =
+            baseContext.getString(R.string.main_activity_permission_request_background_service_button_positive)
+
         AlertDialog.Builder(this)
-            .setTitle("Notification Permission Needed")
-            .setMessage("We need this permission to display notifications and start the timer.")
-            .setPositiveButton("OK") { dialog, _ ->
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton(positiveButton) { dialog, _ ->
                 dialog.dismiss()
             }
             .create()

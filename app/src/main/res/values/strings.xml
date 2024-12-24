@@ -1,16 +1,83 @@
 <resources>
     <string name="app_name">Egg Master</string>
 
-    <!--    Intro Screen-->
-    <!--    Info Card-->
-    <string name="intro_info_text_1">Always put the eggs\ninto boiling water.</string>
-    <string name="intro_info_text_2">Fully cover the eggs\nwith water.</string>
-    <string name="intro_info_text_3">Pierce the eggs so that\nthey don’t crack.</string>
+    <!--Splash Screen-->
+    <string name="splash_screen_label_title">Egg\nMaster</string>
+    <string name="splash_screen_label_subtitle">Prepare eggs just the way you like!</string>
+    <string name="splash_screen_button_start">Get Started</string>
+    <string name="splash_screen_button_tutorial">How to Use</string>
+    <string name="splash_screen_button_contact_me">Contact Us</string>
+
+    <!--Contact Me-->
+    <string name="contact_me_email">jhanihashemi+eggmaster@gmail.com</string>
+    <string name="contact_me_subject">Feedback for Egg Master</string>
+    <string name="contact_me_body">
+        Please provide your feedback here:\n\n1. Bug reports.\n2. Feature requests.\n3. General feedback.\n
+    </string>
+    <string name="contact_me_no_email_app">No email clients installed.</string>
+
+    <!--Intro Screen-->
+    <!--Info Card-->
+    <string name="intro_info_text_1">Always place the eggs\nin boiling water.</string>
+    <string name="intro_info_text_2">Ensure the eggs are\nfully covered with water.</string>
+    <string name="intro_info_text_3">Pierce the eggs to\nprevent cracking.</string>
 
     <string name="intro_info_button_1">Next</string>
     <string name="intro_info_button_2">Next</string>
     <string name="intro_info_button_3">Start</string>
 
+    <!--Egg Boil Details Screen-->
+    <string name="egg_boil_details_screen_title">Egg Boil Details</string>
+    <string name="egg_boil_details_screen_label_headline_prefix">Egg </string>
 
+    <string name="egg_boil_details_screen_label_temperature">Temperature</string>
+    <string name="egg_boil_details_screen_button_fridge_temperature">Fridge Temperature</string>
+    <string name="egg_boil_details_screen_button_room_temperature">Room Temperature</string>
 
+    <string name="egg_boil_details_screen_label_size">Size</string>
+    <string name="egg_boil_details_screen_button_size_small">Small</string>
+    <string name="egg_boil_details_screen_button_size_medium">Medium</string>
+    <string name="egg_boil_details_screen_button_size_large">Large</string>
+
+    <string name="egg_boil_details_screen_label_count">Count</string>
+    <string name="egg_boil_details_screen_slider_content_description">Number of Eggs</string>
+
+    <string name="egg_boil_details_screen_label_boiled_type">Boil Type</string>
+    <string name="egg_boil_details_screen_button_type_soft">Soft</string>
+    <string name="egg_boil_details_screen_button_type_medium">Medium</string>
+    <string name="egg_boil_details_screen_button_type_hard">Hard</string>
+
+    <string name="egg_boil_details_screen_bottom_bar_title">Estimated Boiling Time</string>
+    <string name="egg_boil_details_screen_bottom_bar_button_content_description_next">Next</string>
+
+    <!--Egg Boil Timer Screen-->
+    <string name="egg_boil_timer_screen_title">Boiling Timer</string>
+    <string name="egg_boil_timer_screen_subtitle">Boiling Time</string>
+    <string name="egg_boil_timer_screen_label_description">
+        Almost there! Your eggs will be soft, medium, or hard-boiled just the way you like. Keep an eye on the timer!
+    </string>
+    <string name="egg_boil_timer_screen_button_cancel">Cancel</string>
+
+    <string name="egg_boil_timer_screen_dialog_title">Cancel Timer</string>
+    <string name="egg_boil_timer_screen_dialog_message">Do you want to cancel the timer?</string>
+    <string name="egg_boil_timer_screen_dialog_button_positive">Yes</string>
+    <string name="egg_boil_timer_screen_dialog_button_negative">No</string>
+
+    <!--Egg Boil Result Screen-->
+    <string name="egg_boil_result_screen_title">Your Eggs Are Ready!</string>
+    <string name="egg_boil_result_screen_description">Enjoy your meal! A pinch of salt makes it even better. Feeling creative? Try adding some herbs or a splash of olive oil!</string>
+    <string name="egg_boil_result_screen_button_done">Done</string>
+
+    <!--Main Activity-->
+    <string name="main_activity_permission_request_background_service_title">Notification Permission Needed</string>
+    <string name="main_activity_permission_request_background_service_message">To keep the timer running in the background, please enable the notification permission.</string>
+    <string name="main_activity_permission_request_background_service_button_positive">OK</string>
+
+    <!--Timer Service-->
+    <string name="timer_service_notification_timer_started">Timer Started</string>
+    <string name="timer_service_notification_timer_running">Remaining Time: %s</string>
+    <string name="timer_service_notification_channel_name">Timer Service Channel</string>
+    <string name="timer_service_notification_title">Timer Service</string>
+    <string name="timer_service_notification_finished_title">Egg Timer</string>
+    <string name="timer_service_notification_finished_content">Your egg is ready!</string>
 </resources>

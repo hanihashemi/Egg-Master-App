@@ -21,11 +21,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.github.hanihashemi.eggmaster.MainViewModel
+import io.github.hanihashemi.eggmaster.R
 import io.github.hanihashemi.eggmaster.components.Button
 import io.github.hanihashemi.eggmaster.components.ButtonDefaultStyles
 import io.github.hanihashemi.eggmaster.extensions.isPortrait
@@ -59,15 +61,15 @@ fun SplashScreen(dispatch: (MainViewModel.ViewAction) -> Unit) {
                         verticalArrangement = Arrangement.spacedBy(Dimens.PaddingNormal)
                     ) {
                         Button(
-                            text = "Let's start",
+                            text = stringResource(R.string.splash_screen_button_start),
                             style = ButtonDefaultStyles.Secondary
                         ) { dispatch.invoke(MainViewModel.ViewAction.NavigateToEggDetails) }
                         Button(
-                            text = "Tutorial",
+                            text = stringResource(R.string.splash_screen_button_tutorial),
                             style = ButtonDefaultStyles.Outline,
                         ) { dispatch.invoke(MainViewModel.ViewAction.NavigateToTutorial) }
                         Button(
-                            text = "Contact Me",
+                            text = stringResource(R.string.splash_screen_button_contact_me),
                             style = ButtonDefaultStyles.Transparent,
                         ) { openEmailIntent(context) }
                     }
@@ -127,13 +129,13 @@ private fun Title(modifier: Modifier, displaySubtitle: Boolean = true) {
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
-                text = "Egg\n master",
+                text = stringResource(R.string.splash_screen_label_title),
                 lineHeight = 45.sp,
                 style = MaterialTheme.typography.displayMedium
             )
             if (displaySubtitle) {
                 Text(
-                    text = "prepare eggs as you like!",
+                    text = stringResource(R.string.splash_screen_label_subtitle),
                     style = MaterialTheme.typography.bodyLarge.merge(
                         TextStyle(
                             color = Color.White.copy(alpha = 0.4F)
@@ -146,27 +148,27 @@ private fun Title(modifier: Modifier, displaySubtitle: Boolean = true) {
 }
 
 private fun openEmailIntent(context: android.content.Context) {
+    val email = context.getString(R.string.contact_me_email)
+    val subject = context.getString(R.string.contact_me_subject)
+    val body = context.getString(R.string.contact_me_body)
+    val noEmailApp = context.getString(R.string.contact_me_no_email_app)
+
     val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
         data = Uri.parse("mailto:")
         putExtra(
             Intent.EXTRA_EMAIL,
-            arrayOf("jhanihashemi+eggmaster@gmail.com")
+            arrayOf(email)
         )
-        putExtra(Intent.EXTRA_SUBJECT, "Egg Master Feedback")
-        putExtra(Intent.EXTRA_TEXT, "Your feedback here ...")
+        putExtra(Intent.EXTRA_SUBJECT, subject)
+        putExtra(Intent.EXTRA_TEXT, body)
     }
 
     try {
-        context.startActivity(
-            Intent.createChooser(
-                emailIntent,
-                "Egg Master Feedback"
-            )
-        )
+        context.startActivity(Intent.createChooser(emailIntent, subject))
     } catch (ex: android.content.ActivityNotFoundException) {
         Toast.makeText(
             context,
-            "No email clients installed.",
+            noEmailApp,
             Toast.LENGTH_SHORT
         ).show()
     }

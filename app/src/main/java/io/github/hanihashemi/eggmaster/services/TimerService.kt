@@ -58,7 +58,8 @@ class TimerService : Service() {
     }
 
     private fun startForeground() {
-        val notification = createNotification("Timer started", 0, 0)
+        val notificationContent = getString(R.string.timer_service_notification_timer_started)
+        val notification = createNotification(notificationContent, 0, 0)
         val notificationType = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
         } else 0
@@ -72,6 +73,10 @@ class TimerService : Service() {
     }
 
     private fun startTimer(timeInMillis: Int) {
+        val content = getString(
+            R.string.timer_service_notification_timer_running,
+            remainingTime.formatSecondsToMinutes()
+        )
         remainingTime = timeInMillis
         job = CoroutineScope(Dispatchers.Default).launch {
             preferences.saveStartTimerServiceData()
@@ -79,7 +84,7 @@ class TimerService : Service() {
                 val progress = timeInMillis - remainingTime
                 sendTimeUpdate()
                 updateNotification(
-                    "Remaining time: ${remainingTime.formatSecondsToMinutes()}",
+                    content,
                     progress,
                     timeInMillis
                 )
@@ -107,7 +112,7 @@ class TimerService : Service() {
     private fun createNotificationChannel() {
         val serviceChannel = NotificationChannel(
             CHANNEL,
-            "Timer Service Channel",
+            getString(R.string.timer_service_notification_channel_name),
             NotificationManager.IMPORTANCE_DEFAULT
         )
         val manager = getSystemService(NotificationManager::class.java)
@@ -115,8 +120,9 @@ class TimerService : Service() {
     }
 
     private fun createNotification(content: String, progress: Int, maxProgress: Int): Notification {
+        val title = getString(R.string.timer_service_notification_title)
         return NotificationCompat.Builder(this, CHANNEL)
-            .setContentTitle("Timer Service")
+            .setContentTitle(title)
             .setContentText(content)
             .setContentIntent(
                 PendingIntent.getActivity(
@@ -140,6 +146,8 @@ class TimerService : Service() {
     }
 
     private fun showCompletionNotification() {
+        val title = getString(R.string.timer_service_notification_title)
+        val content = getString(R.string.timer_service_notification_finished_content)
         val intent = Intent(this, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(
             this,
@@ -149,8 +157,8 @@ class TimerService : Service() {
         )
 
         val notification = NotificationCompat.Builder(this, CHANNEL)
-            .setContentTitle("Egg Timer")
-            .setContentText("Egg is ready!")
+            .setContentTitle(title)
+            .setContentText(content)
             .setSmallIcon(R.drawable.ic_egg)
             .setContentIntent(pendingIntent)
             .build()
