@@ -10,7 +10,7 @@
 
     <!--Contact Me-->
     <string name="contact_me_email">jhanihashemi+eggmaster@gmail.com</string>
-    <string name="contact_me_subject">Retour d'information pour Maître des Œufs</string>
+    <string name="contact_me_subject">Retour d\'information pour Maître des Œufs</string>
     <string name="contact_me_body">
         Veuillez fournir vos commentaires ici :\n\n1. Rapports de bogues.\n2. Demandes de fonctionnalités.\n3. Commentaires généraux.\n
     </string>
@@ -18,9 +18,9 @@
 
     <!--Intro Screen-->
     <!--Info Card-->
-    <string name="intro_info_text_1">Placez toujours les œufs\ndans de l'eau bouillante.</string>
-    <string name="intro_info_text_2">Assurez-vous que les œufs sont\nentièrement recouverts d'eau.</string>
-    <string name="intro_info_text_3">Percez les œufs pour\néviter qu'ils ne se fissurent.</string>
+    <string name="intro_info_text_1">Placez toujours les œufs\ndans de l\'eau bouillante.</string>
+    <string name="intro_info_text_2">Assurez-vous que les œufs sont\nentièrement recouverts d\'eau.</string>
+    <string name="intro_info_text_3">Percez les œufs pour\néviter qu\'ils ne se fissurent.</string>
 
     <string name="intro_info_button_1">Suivant</string>
     <string name="intro_info_button_2">Suivant</string>
@@ -40,7 +40,7 @@
     <string name="egg_boil_details_screen_button_size_large">Grand</string>
 
     <string name="egg_boil_details_screen_label_count">Nombre</string>
-    <string name="egg_boil_details_screen_slider_content_description">Nombre d'œufs</string>
+    <string name="egg_boil_details_screen_slider_content_description">Nombre d\'œufs</string>
 
     <string name="egg_boil_details_screen_label_boiled_type">Type de cuisson</string>
     <string name="egg_boil_details_screen_button_type_soft">Mou</string>
@@ -65,12 +65,12 @@
 
     <!--Egg Boil Result Screen-->
     <string name="egg_boil_result_screen_title">Vos œufs sont prêts !</string>
-    <string name="egg_boil_result_screen_description">Bon appétit ! Une pincée de sel les rend encore meilleurs. Vous vous sentez créatif ? Essayez d'ajouter des herbes ou une touche d'huile d'olive !</string>
+    <string name="egg_boil_result_screen_description">Bon appétit ! Une pincée de sel les rend encore meilleurs. Vous vous sentez créatif ? Essayez d\'ajouter des herbes ou une touche d\'huile d\'olive !</string>
     <string name="egg_boil_result_screen_button_done">Terminé</string>
 
     <!--Main Activity-->
     <string name="main_activity_permission_request_background_service_title">Autorisation de notification requise</string>
-    <string name="main_activity_permission_request_background_service_message">Pour que le minuteur fonctionne en arrière-plan, veuillez activer l'autorisation de notification.</string>
+    <string name="main_activity_permission_request_background_service_message">Pour que le minuteur fonctionne en arrière-plan, veuillez activer l\'autorisation de notification.</string>
     <string name="main_activity_permission_request_background_service_button_positive">OK</string>
 
     <!--Timer Service-->
@@ -78,6 +78,6 @@
     <string name="timer_service_notification_timer_running">Temps restant : %s</string>
     <string name="timer_service_notification_channel_name">Canal de service du minuteur</string>
     <string name="timer_service_notification_title">Service de minuteur</string>
-    <string name="timer_service_notification_finished_title">Minuteur d'œufs</string>
+    <string name="timer_service_notification_finished_title">Minuteur d\'œufs</string>
     <string name="timer_service_notification_finished_content">Votre œuf est prêt !</string>
 </resources>
