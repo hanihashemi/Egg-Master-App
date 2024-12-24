@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,6 +26,7 @@ fun OutlinedToggleButton(
     isSelect: Boolean,
     text: String,
     onClick: () -> Unit,
+    smallFontSizes: Boolean = false,
 ) {
     val color = if (isSelect) Color.White else InactiveColor
 
@@ -42,6 +44,7 @@ fun OutlinedToggleButton(
             color = color,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
+            style = if (smallFontSizes) MaterialTheme.typography.bodySmall else MaterialTheme.typography.bodyLarge,
         )
     }
 }
