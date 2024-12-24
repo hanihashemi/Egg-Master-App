@@ -16,6 +16,8 @@ class EggMasterPreferences @Inject constructor(@ApplicationContext context: Cont
         private const val EGG_DETAILS_SIZE_KEY = "size"
         private const val EGG_DETAILS_COUNT_KEY = "count"
         private const val EGG_DETAILS_BOILED_TYPE_KEY = "boiledType"
+        private const val TIMER_SERVICE_RUNNING_KEY = "isTimerRunning"
+        private const val TIMER_SERVICE_END_TIME_KEY = "timerEndTime"
         private const val USER_INFO_STEP_KEY = "userStep"
     }
 
@@ -38,15 +40,43 @@ class EggMasterPreferences @Inject constructor(@ApplicationContext context: Cont
         boiledType = getEnum(EGG_DETAILS_BOILED_TYPE_KEY, EggDetailsDataModel().boiledType),
     )
 
+    fun saveStartTimerServiceData() {
+        sharedPreferences.edit()
+            .putLong(TIMER_SERVICE_END_TIME_KEY, 0)
+            .putBoolean(TIMER_SERVICE_RUNNING_KEY, true)
+            .apply()
+    }
+
+    fun saveEndTimerServiceData() {
+        sharedPreferences.edit()
+            .putLong(TIMER_SERVICE_END_TIME_KEY, System.currentTimeMillis())
+            .putBoolean(TIMER_SERVICE_RUNNING_KEY, false)
+            .apply()
+    }
+
+    fun isServiceRunning(): Boolean = sharedPreferences.getBoolean(TIMER_SERVICE_RUNNING_KEY, false)
+
+    fun isServiceEndedInLastTenMinutes(): Boolean {
+        val endTime = sharedPreferences.getLong(TIMER_SERVICE_END_TIME_KEY, 0)
+        return System.currentTimeMillis() - endTime < 10 * 60 * 1000
+    }
+
     fun saveUserInfo(userInfo: UserInfoDataModel) {
         sharedPreferences.edit().putEnum(USER_INFO_STEP_KEY, userInfo.userStep).apply()
     }
 
-    fun getUserInfo(): UserInfoDataModel = UserInfoDataModel(
-        userStep = getEnum(USER_INFO_STEP_KEY, UserInfoDataModel().userStep)
-    )
-
     private fun Editor.putEnum(key: String, value: Enum<*>): Editor = putString(key, value.name)
+
+    fun resetEndServiceTime() {
+        sharedPreferences.edit()
+            .putLong(TIMER_SERVICE_END_TIME_KEY, 0)
+            .putBoolean(TIMER_SERVICE_RUNNING_KEY, false)
+            .apply()
+    }
+
+    fun setTimerServiceStatus(status: Boolean) {
+        sharedPreferences.edit().putBoolean(TIMER_SERVICE_RUNNING_KEY, status).apply()
+    }
 
     private inline fun <reified T : Enum<T>> getEnum(key: String, defaultValue: T): T {
         val name = sharedPreferences.getString(key, defaultValue.name)
