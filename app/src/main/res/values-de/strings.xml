@@ -1,0 +1,83 @@
+<resources>
+    <string name="app_name">Eier Meister</string>
+
+    <!--Splash Screen-->
+    <string name="splash_screen_label_title">Eier\nMeister</string>
+    <string name="splash_screen_label_subtitle">Bereiten Sie Eier genau so zu, wie Sie es mögen!</string>
+    <string name="splash_screen_button_start">Loslegen</string>
+    <string name="splash_screen_button_tutorial">Anleitung</string>
+    <string name="splash_screen_button_contact_me">Kontaktieren Sie uns</string>
+
+    <!--Contact Me-->
+    <string name="contact_me_email">jhanihashemi+eggmaster@gmail.com</string>
+    <string name="contact_me_subject">Feedback für Eier Meister</string>
+    <string name="contact_me_body">
+        Bitte geben Sie hier Ihr Feedback ein:\n\n1. Fehlerberichte.\n2. Funktionswünsche.\n3. Allgemeines Feedback.\n
+    </string>
+    <string name="contact_me_no_email_app">Keine E-Mail-Clients installiert.</string>
+
+    <!--Intro Screen-->
+    <!--Info Card-->
+    <string name="intro_info_text_1">Legen Sie die Eier immer\nin kochendes Wasser.</string>
+    <string name="intro_info_text_2">Stellen Sie sicher, dass die Eier\nvollständig mit Wasser bedeckt sind.</string>
+    <string name="intro_info_text_3">Stechen Sie die Eier an, um\nRisse zu vermeiden.</string>
+
+    <string name="intro_info_button_1">Weiter</string>
+    <string name="intro_info_button_2">Weiter</string>
+    <string name="intro_info_button_3">Start</string>
+
+    <!--Egg Boil Details Screen-->
+    <string name="egg_boil_details_screen_title">Eierkochdetails</string>
+    <string name="egg_boil_details_screen_label_headline_prefix">Ei </string>
+
+    <string name="egg_boil_details_screen_label_temperature">Temperatur</string>
+    <string name="egg_boil_details_screen_button_fridge_temperature">Kühlschranktemperatur</string>
+    <string name="egg_boil_details_screen_button_room_temperature">Raumtemperatur</string>
+
+    <string name="egg_boil_details_screen_label_size">Größe</string>
+    <string name="egg_boil_details_screen_button_size_small">Klein</string>
+    <string name="egg_boil_details_screen_button_size_medium">Mittel</string>
+    <string name="egg_boil_details_screen_button_size_large">Groß</string>
+
+    <string name="egg_boil_details_screen_label_count">Anzahl</string>
+    <string name="egg_boil_details_screen_slider_content_description">Anzahl der Eier</string>
+
+    <string name="egg_boil_details_screen_label_boiled_type">Kochtyp</string>
+    <string name="egg_boil_details_screen_button_type_soft">Weich</string>
+    <string name="egg_boil_details_screen_button_type_medium">Mittel</string>
+    <string name="egg_boil_details_screen_button_type_hard">Hart</string>
+
+    <string name="egg_boil_details_screen_bottom_bar_title">Geschätzte Kochzeit</string>
+    <string name="egg_boil_details_screen_bottom_bar_button_content_description_next">Weiter</string>
+
+    <!--Egg Boil Timer Screen-->
+    <string name="egg_boil_timer_screen_title">Kochzeit-Timer</string>
+    <string name="egg_boil_timer_screen_subtitle">Kochzeit</string>
+    <string name="egg_boil_timer_screen_label_description">
+        Fast fertig! Ihre Eier werden weich, mittel oder hart gekocht, genau so, wie Sie es mögen. Behalten Sie den Timer im Auge!
+    </string>
+    <string name="egg_boil_timer_screen_button_cancel">Abbrechen</string>
+
+    <string name="egg_boil_timer_screen_dialog_title">Timer abbrechen</string>
+    <string name="egg_boil_timer_screen_dialog_message">Möchten Sie den Timer abbrechen?</string>
+    <string name="egg_boil_timer_screen_dialog_button_positive">Ja</string>
+    <string name="egg_boil_timer_screen_dialog_button_negative">Nein</string>
+
+    <!--Egg Boil Result Screen-->
+    <string name="egg_boil_result_screen_title">Ihre Eier sind fertig!</string>
+    <string name="egg_boil_result_screen_description">Genießen Sie Ihre Mahlzeit! Eine Prise Salz macht es noch besser. Fühlen Sie sich kreativ? Versuchen Sie, einige Kräuter oder einen Spritzer Olivenöl hinzuzufügen!</string>
+    <string name="egg_boil_result_screen_button_done">Fertig</string>
+
+    <!--Main Activity-->
+    <string name="main_activity_permission_request_background_service_title">Benachrichtigungsberechtigung erforderlich</string>
+    <string name="main_activity_permission_request_background_service_message">Um den Timer im Hintergrund laufen zu lassen, aktivieren Sie bitte die Benachrichtigungsberechtigung.</string>
+    <string name="main_activity_permission_request_background_service_button_positive">OK</string>
+
+    <!--Timer Service-->
+    <string name="timer_service_notification_timer_started">Timer gestartet</string>
+    <string name="timer_service_notification_timer_running">Verbleibende Zeit: %s</string>
+    <string name="timer_service_notification_channel_name">Timer-Dienstkanal</string>
+    <string name="timer_service_notification_title">Timer-Dienst</string>
+    <string name="timer_service_notification_finished_title">Eier-Timer</string>
+    <string name="timer_service_notification_finished_content">Ihr Ei ist fertig!</string>
+</resources>

@@ -1,0 +1,83 @@
+<resources>
+    <string name="app_name">Maître des Œufs</string>
+
+    <!--Splash Screen-->
+    <string name="splash_screen_label_title">Maître\ndes Œufs</string>
+    <string name="splash_screen_label_subtitle">Préparez les œufs exactement comme vous les aimez !</string>
+    <string name="splash_screen_button_start">Commencer</string>
+    <string name="splash_screen_button_tutorial">Comment Utiliser</string>
+    <string name="splash_screen_button_contact_me">Contactez-nous</string>
+
+    <!--Contact Me-->
+    <string name="contact_me_email">jhanihashemi+eggmaster@gmail.com</string>
+    <string name="contact_me_subject">Retour d'information pour Maître des Œufs</string>
+    <string name="contact_me_body">
+        Veuillez fournir vos commentaires ici :\n\n1. Rapports de bogues.\n2. Demandes de fonctionnalités.\n3. Commentaires généraux.\n
+    </string>
+    <string name="contact_me_no_email_app">Aucun client de messagerie installé.</string>
+
+    <!--Intro Screen-->
+    <!--Info Card-->
+    <string name="intro_info_text_1">Placez toujours les œufs\ndans de l'eau bouillante.</string>
+    <string name="intro_info_text_2">Assurez-vous que les œufs sont\nentièrement recouverts d'eau.</string>
+    <string name="intro_info_text_3">Percez les œufs pour\néviter qu'ils ne se fissurent.</string>
+
+    <string name="intro_info_button_1">Suivant</string>
+    <string name="intro_info_button_2">Suivant</string>
+    <string name="intro_info_button_3">Démarrer</string>
+
+    <!--Egg Boil Details Screen-->
+    <string name="egg_boil_details_screen_title">Détails de la cuisson des œufs</string>
+    <string name="egg_boil_details_screen_label_headline_prefix">Œuf </string>
+
+    <string name="egg_boil_details_screen_label_temperature">Température</string>
+    <string name="egg_boil_details_screen_button_fridge_temperature">Température du réfrigérateur</string>
+    <string name="egg_boil_details_screen_button_room_temperature">Température ambiante</string>
+
+    <string name="egg_boil_details_screen_label_size">Taille</string>
+    <string name="egg_boil_details_screen_button_size_small">Petit</string>
+    <string name="egg_boil_details_screen_button_size_medium">Moyen</string>
+    <string name="egg_boil_details_screen_button_size_large">Grand</string>
+
+    <string name="egg_boil_details_screen_label_count">Nombre</string>
+    <string name="egg_boil_details_screen_slider_content_description">Nombre d'œufs</string>
+
+    <string name="egg_boil_details_screen_label_boiled_type">Type de cuisson</string>
+    <string name="egg_boil_details_screen_button_type_soft">Mou</string>
+    <string name="egg_boil_details_screen_button_type_medium">Moyen</string>
+    <string name="egg_boil_details_screen_button_type_hard">Dur</string>
+
+    <string name="egg_boil_details_screen_bottom_bar_title">Temps de cuisson estimé</string>
+    <string name="egg_boil_details_screen_bottom_bar_button_content_description_next">Suivant</string>
+
+    <!--Egg Boil Timer Screen-->
+    <string name="egg_boil_timer_screen_title">Minuteur de cuisson</string>
+    <string name="egg_boil_timer_screen_subtitle">Temps de cuisson</string>
+    <string name="egg_boil_timer_screen_label_description">
+        Presque prêt ! Vos œufs seront cuits à la coque, mollets ou durs, exactement comme vous les aimez. Gardez un œil sur le minuteur !
+    </string>
+    <string name="egg_boil_timer_screen_button_cancel">Annuler</string>
+
+    <string name="egg_boil_timer_screen_dialog_title">Annuler le minuteur</string>
+    <string name="egg_boil_timer_screen_dialog_message">Voulez-vous annuler le minuteur ?</string>
+    <string name="egg_boil_timer_screen_dialog_button_positive">Oui</string>
+    <string name="egg_boil_timer_screen_dialog_button_negative">Non</string>
+
+    <!--Egg Boil Result Screen-->
+    <string name="egg_boil_result_screen_title">Vos œufs sont prêts !</string>
+    <string name="egg_boil_result_screen_description">Bon appétit ! Une pincée de sel les rend encore meilleurs. Vous vous sentez créatif ? Essayez d'ajouter des herbes ou une touche d'huile d'olive !</string>
+    <string name="egg_boil_result_screen_button_done">Terminé</string>
+
+    <!--Main Activity-->
+    <string name="main_activity_permission_request_background_service_title">Autorisation de notification requise</string>
+    <string name="main_activity_permission_request_background_service_message">Pour que le minuteur fonctionne en arrière-plan, veuillez activer l'autorisation de notification.</string>
+    <string name="main_activity_permission_request_background_service_button_positive">OK</string>
+
+    <!--Timer Service-->
+    <string name="timer_service_notification_timer_started">Minuteur démarré</string>
+    <string name="timer_service_notification_timer_running">Temps restant : %s</string>
+    <string name="timer_service_notification_channel_name">Canal de service du minuteur</string>
+    <string name="timer_service_notification_title">Service de minuteur</string>
+    <string name="timer_service_notification_finished_title">Minuteur d'œufs</string>
+    <string name="timer_service_notification_finished_content">Votre œuf est prêt !</string>
+</resources>

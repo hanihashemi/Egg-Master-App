@@ -1,0 +1,83 @@
+<resources>
+    <string name="app_name">استاد تخم مرغ</string>
+
+    <!--Splash Screen-->
+    <string name="splash_screen_label_title">استاد\nتخم مرغ</string>
+    <string name="splash_screen_label_subtitle">تخم مرغ‌ها را دقیقاً به همان شکلی که دوست دارید آماده کنید!</string>
+    <string name="splash_screen_button_start">شروع کنید</string>
+    <string name="splash_screen_button_tutorial">نحوه استفاده</string>
+    <string name="splash_screen_button_contact_me">تماس با ما</string>
+
+    <!--Contact Me-->
+    <string name="contact_me_email">jhanihashemi+eggmaster@gmail.com</string>
+    <string name="contact_me_subject">بازخورد برای استاد تخم مرغ</string>
+    <string name="contact_me_body">
+        لطفاً بازخورد خود را اینجا ارائه دهید:\n\n1. گزارش‌های خطا.\n2. درخواست‌های ویژگی.\n3. بازخورد عمومی.\n
+    </string>
+    <string name="contact_me_no_email_app">هیچ کلاینت ایمیلی نصب نشده است.</string>
+
+    <!--Intro Screen-->
+    <!--Info Card-->
+    <string name="intro_info_text_1">همیشه تخم مرغ‌ها را\nدر آب جوش قرار دهید.</string>
+    <string name="intro_info_text_2">اطمینان حاصل کنید که تخم مرغ‌ها\nکاملاً با آب پوشانده شده‌اند.</string>
+    <string name="intro_info_text_3">تخم مرغ‌ها را سوراخ کنید تا\nاز ترک خوردن جلوگیری شود.</string>
+
+    <string name="intro_info_button_1">بعدی</string>
+    <string name="intro_info_button_2">بعدی</string>
+    <string name="intro_info_button_3">شروع</string>
+
+    <!--Egg Boil Details Screen-->
+    <string name="egg_boil_details_screen_title">جزئیات جوشاندن تخم مرغ</string>
+    <string name="egg_boil_details_screen_label_headline_prefix">تخم مرغ </string>
+
+    <string name="egg_boil_details_screen_label_temperature">دما</string>
+    <string name="egg_boil_details_screen_button_fridge_temperature">دمای یخچال</string>
+    <string name="egg_boil_details_screen_button_room_temperature">دمای اتاق</string>
+
+    <string name="egg_boil_details_screen_label_size">اندازه</string>
+    <string name="egg_boil_details_screen_button_size_small">کوچک</string>
+    <string name="egg_boil_details_screen_button_size_medium">متوسط</string>
+    <string name="egg_boil_details_screen_button_size_large">بزرگ</string>
+
+    <string name="egg_boil_details_screen_label_count">تعداد</string>
+    <string name="egg_boil_details_screen_slider_content_description">تعداد تخم مرغ‌ها</string>
+
+    <string name="egg_boil_details_screen_label_boiled_type">نوع جوشاندن</string>
+    <string name="egg_boil_details_screen_button_type_soft">نرم</string>
+    <string name="egg_boil_details_screen_button_type_medium">متوسط</string>
+    <string name="egg_boil_details_screen_button_type_hard">سخت</string>
+
+    <string name="egg_boil_details_screen_bottom_bar_title">زمان جوشاندن تخمینی</string>
+    <string name="egg_boil_details_screen_bottom_bar_button_content_description_next">بعدی</string>
+
+    <!--Egg Boil Timer Screen-->
+    <string name="egg_boil_timer_screen_title">تایمر جوشاندن</string>
+    <string name="egg_boil_timer_screen_subtitle">زمان جوشاندن</string>
+    <string name="egg_boil_timer_screen_label_description">
+        تقریباً آماده است! تخم مرغ‌های شما نرم، متوسط یا سخت جوشانده خواهند شد، دقیقاً به همان شکلی که دوست دارید. تایمر را زیر نظر داشته باشید!
+    </string>
+    <string name="egg_boil_timer_screen_button_cancel">لغو</string>
+
+    <string name="egg_boil_timer_screen_dialog_title">لغو تایمر</string>
+    <string name="egg_boil_timer_screen_dialog_message">آیا می‌خواهید تایمر را لغو کنید؟</string>
+    <string name="egg_boil_timer_screen_dialog_button_positive">بله</string>
+    <string name="egg_boil_timer_screen_dialog_button_negative">خیر</string>
+
+    <!--Egg Boil Result Screen-->
+    <string name="egg_boil_result_screen_title">تخم مرغ‌های شما آماده‌اند!</string>
+    <string name="egg_boil_result_screen_description">از وعده غذایی خود لذت ببرید! یک پینچ نمک آن را حتی بهتر می‌کند. احساس خلاقیت می‌کنید؟ سعی کنید کمی سبزیجات یا یک قطره روغن زیتون اضافه کنید!</string>
+    <string name="egg_boil_result_screen_button_done">تمام</string>
+
+    <!--Main Activity-->
+    <string name="main_activity_permission_request_background_service_title">مجوز اعلان مورد نیاز است</string>
+    <string name="main_activity_permission_request_background_service_message">برای اینکه تایمر در پس‌زمینه اجرا شود، لطفاً مجوز اعلان را فعال کنید.</string>
+    <string name="main_activity_permission_request_background_service_button_positive">باشه</string>
+
+    <!--Timer Service-->
+    <string name="timer_service_notification_timer_started">تایمر شروع شد</string>
+    <string name="timer_service_notification_timer_running">زمان باقی‌مانده: %s</string>
+    <string name="timer_service_notification_channel_name">کانال سرویس تایمر</string>
+    <string name="timer_service_notification_title">سرویس تایمر</string>
+    <string name="timer_service_notification_finished_title">تای��ر تخم مرغ</string>
+    <string name="timer_service_notification_finished_content">تخم مرغ شما آماده است!</string>
+</resources>

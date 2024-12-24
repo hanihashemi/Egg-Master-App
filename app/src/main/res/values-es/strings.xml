@@ -1,0 +1,83 @@
+<resources>
+    <string name="app_name">Maestro de Huevos</string>
+
+    <!--Splash Screen-->
+    <string name="splash_screen_label_title">Maestro\nde Huevos</string>
+    <string name="splash_screen_label_subtitle">¡Prepara los huevos exactamente como te gustan!</string>
+    <string name="splash_screen_button_start">Comenzar</string>
+    <string name="splash_screen_button_tutorial">Cómo Usar</string>
+    <string name="splash_screen_button_contact_me">Contáctanos</string>
+
+    <!--Contact Me-->
+    <string name="contact_me_email">jhanihashemi+eggmaster@gmail.com</string>
+    <string name="contact_me_subject">Comentarios para Maestro de Huevos</string>
+    <string name="contact_me_body">
+        Por favor, proporciona tus comentarios aquí:\n\n1. Informes de errores.\n2. Solicitudes de funciones.\n3. Comentarios generales.\n
+    </string>
+    <string name="contact_me_no_email_app">No hay clientes de correo instalados.</string>
+
+    <!--Intro Screen-->
+    <!--Info Card-->
+    <string name="intro_info_text_1">Siempre coloca los huevos\nen agua hirviendo.</string>
+    <string name="intro_info_text_2">Asegúrate de que los huevos estén\ncompletamente cubiertos con agua.</string>
+    <string name="intro_info_text_3">Perfora los huevos para\nprevenir que se rompan.</string>
+
+    <string name="intro_info_button_1">Siguiente</string>
+    <string name="intro_info_button_2">Siguiente</string>
+    <string name="intro_info_button_3">Iniciar</string>
+
+    <!--Egg Boil Details Screen-->
+    <string name="egg_boil_details_screen_title">Detalles de Cocción de Huevos</string>
+    <string name="egg_boil_details_screen_label_headline_prefix">Huevo </string>
+
+    <string name="egg_boil_details_screen_label_temperature">Temperatura</string>
+    <string name="egg_boil_details_screen_button_fridge_temperature">Temperatura del Refrigerador</string>
+    <string name="egg_boil_details_screen_button_room_temperature">Temperatura Ambiente</string>
+
+    <string name="egg_boil_details_screen_label_size">Tamaño</string>
+    <string name="egg_boil_details_screen_button_size_small">Pequeño</string>
+    <string name="egg_boil_details_screen_button_size_medium">Mediano</string>
+    <string name="egg_boil_details_screen_button_size_large">Grande</string>
+
+    <string name="egg_boil_details_screen_label_count">Cantidad</string>
+    <string name="egg_boil_details_screen_slider_content_description">Número de Huevos</string>
+
+    <string name="egg_boil_details_screen_label_boiled_type">Tipo de Cocción</string>
+    <string name="egg_boil_details_screen_button_type_soft">Suave</string>
+    <string name="egg_boil_details_screen_button_type_medium">Medio</string>
+    <string name="egg_boil_details_screen_button_type_hard">Duro</string>
+
+    <string name="egg_boil_details_screen_bottom_bar_title">Tiempo Estimado de Cocción</string>
+    <string name="egg_boil_details_screen_bottom_bar_button_content_description_next">Siguiente</string>
+
+    <!--Egg Boil Timer Screen-->
+    <string name="egg_boil_timer_screen_title">Temporizador de Cocción</string>
+    <string name="egg_boil_timer_screen_subtitle">Tiempo de Cocción</string>
+    <string name="egg_boil_timer_screen_label_description">
+        ¡Casi listo! Tus huevos estarán cocidos suaves, medios o duros, exactamente como te gustan. ¡Mantén un ojo en el temporizador!
+    </string>
+    <string name="egg_boil_timer_screen_button_cancel">Cancelar</string>
+
+    <string name="egg_boil_timer_screen_dialog_title">Cancelar Temporizador</string>
+    <string name="egg_boil_timer_screen_dialog_message">¿Quieres cancelar el temporizador?</string>
+    <string name="egg_boil_timer_screen_dialog_button_positive">Sí</string>
+    <string name="egg_boil_timer_screen_dialog_button_negative">No</string>
+
+    <!--Egg Boil Result Screen-->
+    <string name="egg_boil_result_screen_title">¡Tus Huevos Están Listos!</string>
+    <string name="egg_boil_result_screen_description">¡Disfruta tu comida! Una pizca de sal lo hace aún mejor. ¿Te sientes creativo? ¡Intenta agregar algunas hierbas o un chorrito de aceite de oliva!</string>
+    <string name="egg_boil_result_screen_button_done">Hecho</string>
+
+    <!--Main Activity-->
+    <string name="main_activity_permission_request_background_service_title">Permiso de Notificación Necesario</string>
+    <string name="main_activity_permission_request_background_service_message">Para mantener el temporizador funcionando en segundo plano, por favor habilita el permiso de notificación.</string>
+    <string name="main_activity_permission_request_background_service_button_positive">OK</string>
+
+    <!--Timer Service-->
+    <string name="timer_service_notification_timer_started">Temporizador Iniciado</string>
+    <string name="timer_service_notification_timer_running">Tiempo Restante: %s</string>
+    <string name="timer_service_notification_channel_name">Canal de Servicio de Temporizador</string>
+    <string name="timer_service_notification_title">Servicio de Temporizador</string>
+    <string name="timer_service_notification_finished_title">Temporizador de Huevos</string>
+    <string name="timer_service_notification_finished_content">¡Tu huevo está listo!</string>
+</resources>
