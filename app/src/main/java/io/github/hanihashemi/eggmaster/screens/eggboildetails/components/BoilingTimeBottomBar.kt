@@ -70,7 +70,8 @@ fun BoilingTimeBottomBar(state: UiState, onClick: () -> Unit = {}) {
         Row(
             modifier = Modifier
                 .widthIn(max = 350.dp)
-                .padding(Dimens.PaddingNormal)
+                .padding(top = Dimens.PaddingNormal)
+                .padding(horizontal = Dimens.PaddingNormal)
                 .clip(Shapes.large)
                 .fillMaxWidth()
                 .background(color = Color.White)

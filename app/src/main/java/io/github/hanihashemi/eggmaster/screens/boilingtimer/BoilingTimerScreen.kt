@@ -31,6 +31,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.github.hanihashemi.eggmaster.MainViewModel
 import io.github.hanihashemi.eggmaster.R
 import io.github.hanihashemi.eggmaster.components.BoilingPot
 import io.github.hanihashemi.eggmaster.components.BottomBarButton
@@ -44,17 +45,21 @@ import io.github.hanihashemi.eggmaster.ui.theme.Dimens
 import io.github.hanihashemi.eggmaster.ui.theme.EggMasterTheme
 
 @Composable
-fun BoilingTimerScreen(state: UiState) {
+fun BoilingTimerScreen(state: UiState, dispatch: (MainViewModel.ViewAction) -> Unit) {
     val context = LocalContext.current
 
     Scaffold(
-        topBar = { TopBar(title = "Boiling Timer") },
+        topBar = { TopBar(titleString = "Boiling Timer") },
         bottomBar = {
             BottomBarButton("Cancel") {
                 AlertDialog.Builder(context)
-                    .setTitle("Notification Permission Needed")
-                    .setMessage("We need this permission to display notifications and start the timer.")
-                    .setPositiveButton("OK") { dialog, _ ->
+                    .setTitle("Cancel Timer")
+                    .setMessage("Do you want to cancel the timer?")
+                    .setPositiveButton("Yes") { dialog, _ ->
+                        dialog.dismiss()
+                        dispatch(MainViewModel.ViewAction.CancelTimer)
+                    }
+                    .setNegativeButton("No") { dialog, _ ->
                         dialog.dismiss()
                     }
                     .create()
@@ -71,7 +76,7 @@ fun BoilingTimerScreen(state: UiState) {
         ) {
             BoilingPot(dropEgg = true)
             Text(
-                text = state.eggTimer.time.formatSecondsToMinutes(),
+                text = getMinutes(state.eggTimer.time),
                 modifier = Modifier
                     .padding(
                         top = Dimens.PaddingLarge,
@@ -107,6 +112,8 @@ fun BoilingTimerScreen(state: UiState) {
     }
 }
 
+private fun getMinutes(time: Int): String = time.takeIf { it != 0 }?.formatSecondsToMinutes() ?: ""
+
 @Composable
 private fun ClockFace(time: Int) {
     var rotationAngel by remember { mutableFloatStateOf(0f) }
@@ -116,7 +123,7 @@ private fun ClockFace(time: Int) {
     )
 
     LaunchedEffect(time) {
-            rotationAngel += 6f
+        rotationAngel += 6f
     }
 
     CustomClockLayout(
@@ -184,6 +191,7 @@ private fun BoilingTimerScreenSmallSizePreview() {
                 startDestination = "",
                 eggTimer = EggTimerUiModel(),
             ),
+            dispatch = { },
         )
     }
 }
@@ -198,6 +206,7 @@ private fun BoilingTimerScreenMediumSizePreview() {
                 startDestination = "",
                 eggTimer = EggTimerUiModel(),
             ),
+            dispatch = { },
         )
     }
 }
@@ -212,6 +221,7 @@ private fun BoilingTimerScreenLargeSizePreview() {
                 startDestination = "",
                 eggTimer = EggTimerUiModel(),
             ),
+            dispatch = { },
         )
     }
 }

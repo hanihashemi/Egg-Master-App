@@ -23,11 +23,4 @@ object Dimens {
     val PaddingXLarge: Dp = 36.dp
 
     val PaddingXXLarge: Dp = 48.dp
-
-//    val PlantDetailAppBarHeight: Dp
-//        @Composable get() = dimensionResource(R.dimen.plant_detail_app_bar_height)
-//
-//    val ToolbarIconPadding = 12.dp
-//
-//    val ToolbarIconSize = 32.dp
 }

@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import io.github.hanihashemi.eggmaster.MainViewModel
 import io.github.hanihashemi.eggmaster.R
 import io.github.hanihashemi.eggmaster.components.BoilingPot
+import io.github.hanihashemi.eggmaster.components.TopBar
 import io.github.hanihashemi.eggmaster.screens.tutorial.components.InformationCards
 import io.github.hanihashemi.eggmaster.screens.tutorial.components.PageIndicator
 import io.github.hanihashemi.eggmaster.ui.models.EggDetailsUiModel
@@ -35,12 +36,24 @@ fun TutorialScreen(
     dispatch: (MainViewModel.ViewAction) -> Unit,
 ) {
     Scaffold(
-        topBar = { TopBar(state) },
+        topBar = {
+            TopBar(
+                onBackClicked = { dispatch(MainViewModel.ViewAction.TutorialPreviousPressed) },
+            ) {
+                PageIndicator(
+                    modifier = Modifier
+                        .padding(vertical = Dimens.PaddingNormal)
+                        .fillMaxWidth()
+                        .height(40.dp),
+                    currentPage = state.tutorialCurrentStep
+                )
+            }
+        },
         bottomBar = { BottomBar(state, dispatch) },
+        containerColor = MaterialTheme.colorScheme.surface,
     ) { paddingValues ->
         Column(
             modifier = Modifier
-                .background(MaterialTheme.colorScheme.surface)
                 .padding(paddingValues)
                 .padding(Dimens.PaddingNormal),
         ) {
@@ -60,17 +73,6 @@ fun TutorialScreen(
             }
         }
     }
-}
-
-@Composable
-private fun TopBar(state: UiState) {
-    PageIndicator(
-        modifier = Modifier
-            .padding(vertical = Dimens.PaddingNormal)
-            .fillMaxWidth()
-            .height(40.dp),
-        currentPage = state.tutorialCurrentStep
-    )
 }
 
 @Composable
