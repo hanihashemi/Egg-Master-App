@@ -19,6 +19,11 @@ sealed class Screen(val route: String, val navArguments: List<NamedNavArgument> 
     data object Timer : Screen("timer") {
         sealed class Destination(val route: String) {
             data object BoilTimer : Destination("boilTimer")
+        }
+    }
+
+    data object Finished : Screen("finished") {
+        sealed class Destination(val route: String) {
             data object BoilFinish : Destination("boilFinish")
         }
     }

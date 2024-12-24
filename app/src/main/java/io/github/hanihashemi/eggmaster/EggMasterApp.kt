@@ -6,10 +6,12 @@ import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import io.github.hanihashemi.eggmaster.screens.boilingdone.BoilingDoneScreen
 import io.github.hanihashemi.eggmaster.screens.boilingtimer.BoilingTimerScreen
 import io.github.hanihashemi.eggmaster.screens.eggboildetails.EggBoilDetailsScreen
 import io.github.hanihashemi.eggmaster.screens.splash.SplashScreen
@@ -43,7 +45,10 @@ private fun HandleTutorialScreenBackButton(
 }
 
 @Composable
-private fun EggMasterNavHost(navController: NavHostController, viewModel: MainViewModel) {
+private fun EggMasterNavHost(
+    navController: NavHostController,
+    viewModel: MainViewModel,
+) {
     val state by viewModel.viewState.collectAsState()
 
     NavHost(
@@ -78,9 +83,7 @@ private fun EggMasterNavHost(navController: NavHostController, viewModel: MainVi
             route = Screen.Intro.route,
         ) {
             composable(Screen.Intro.Destination.Title.route) {
-                SplashScreen {
-                    navController.navigate(Screen.Intro.Destination.Tutorial.route)
-                }
+                SplashScreen(dispatch = viewModel::dispatch)
             }
             composable(Screen.Intro.Destination.Tutorial.route) {
                 TutorialScreen(
@@ -93,7 +96,7 @@ private fun EggMasterNavHost(navController: NavHostController, viewModel: MainVi
         composable(Screen.BoilDetail.route) {
             EggBoilDetailsScreen(
                 state = state,
-                dispatch = viewModel::dispatch
+                dispatch = viewModel::dispatch,
             )
         }
 
@@ -103,14 +106,18 @@ private fun EggMasterNavHost(navController: NavHostController, viewModel: MainVi
         ) {
             composable(Screen.Timer.Destination.BoilTimer.route) {
                 BoilingTimerScreen(
-                    state = state
+                    state = state,
+                    dispatch = viewModel::dispatch,
                 )
             }
-            composable(Screen.Timer.Destination.BoilFinish.route) {
-                TutorialScreen(
-                    state = state,
-                    dispatch = viewModel::dispatch
-                )
+        }
+
+        navigation(
+            startDestination = Screen.Finished.Destination.BoilFinish.route,
+            route = Screen.Finished.route,
+        ) {
+            composable(Screen.Finished.Destination.BoilFinish.route) {
+                BoilingDoneScreen(dispatch = viewModel::dispatch)
             }
         }
     }

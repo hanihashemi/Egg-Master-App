@@ -1,5 +1,6 @@
 package io.github.hanihashemi.eggmaster.screens.boilingdone
 
+import android.app.NotificationManager
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,11 +15,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.getSystemService
+import io.github.hanihashemi.eggmaster.MainViewModel
 import io.github.hanihashemi.eggmaster.components.BottomBarButton
 import io.github.hanihashemi.eggmaster.screens.boilingdone.components.ShakingEgg
 import io.github.hanihashemi.eggmaster.ui.theme.Dimens
@@ -32,17 +37,29 @@ import nl.dionsegijn.konfetti.core.emitter.Emitter
 import java.util.concurrent.TimeUnit
 
 @Composable
-fun BoilingDoneScreen() {
+fun BoilingDoneScreen(dispatch: (MainViewModel.ViewAction) -> Unit) {
+    val context = LocalContext.current
+    val notificationManager = getSystemService(context, NotificationManager::class.java)
+
+    LaunchedEffect(Unit) {
+        notificationManager?.cancelAll()
+        dispatch(MainViewModel.ViewAction.OnDoneScreenShown)
+    }
+
     Scaffold(
         bottomBar = {
-            BottomBarButton("Done") { }
+            BottomBarButton("Done") {
+                dispatch(MainViewModel.ViewAction.OnDonePressed)
+            }
         },
         containerColor = MaterialTheme.colorScheme.surface,
     ) { paddingValues ->
 
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .padding(paddingValues)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
             Column(
                 modifier = Modifier.fillMaxHeight(),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -92,7 +109,7 @@ fun parade(): List<Party> {
         angle = Angle.RIGHT - 45,
         spread = Spread.SMALL,
         colors = listOf(0xfce18a, 0xff726d, 0xf4306d, 0xb48def),
-        emitter = Emitter(duration = 5, TimeUnit.SECONDS).perSecond(30),
+        emitter = Emitter(duration = 10, TimeUnit.SECONDS).perSecond(30),
         position = Position.Relative(0.0, 0.4)
     )
 
@@ -109,6 +126,8 @@ fun parade(): List<Party> {
 @Composable
 fun BoilingDoneScreenPreview() {
     EggMasterTheme {
-        BoilingDoneScreen()
+        BoilingDoneScreen(
+            dispatch = {},
+        )
     }
 }
