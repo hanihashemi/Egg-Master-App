@@ -43,7 +43,6 @@ class MainViewModel @Inject constructor(
         InternalState(
             eggDetails = getEggDetailsFromPreferences(),
             eggTimer = EggTimerUiModel(),
-            isTimerServiceRunning = false,
         )
     )
     val viewState: StateFlow<UiState> = internalState
@@ -60,8 +59,8 @@ class MainViewModel @Inject constructor(
         )
 
     private fun init(isTimerServiceRunning: Boolean) {
-        internalState.update {
-            it.copy(isTimerServiceRunning = isTimerServiceRunning)
+        viewModelScope.launch(Dispatchers.IO) {
+            preferences.setTimerServiceStatus(isTimerServiceRunning)
         }
     }
 
@@ -86,13 +85,58 @@ class MainViewModel @Inject constructor(
             is ViewAction.UpdateBoilingTime -> updateBoilingTime()
             is ViewAction.StartTimer -> startTimer()
             is ViewAction.UpdateTimber -> updateTimer(action.time)
+            is ViewAction.CancelTimer -> cancelTimer()
+            is ViewAction.OnDonePressed -> onDonePressed()
+            is ViewAction.OnDoneScreenShown -> onDoneScreenShown()
+            is ViewAction.NavigateToTutorial -> navigateToTutorial()
+            is ViewAction.NavigateToEggDetails -> navigateToEggDetails()
+            is ViewAction.NavigateBack -> _viewEvent.trySend(ViewEvent.NavigateBack)
             is ViewAction.Init -> init(action.isTimerServiceRunning)
+            is ViewAction.ResetTimerServiceEndTime -> resetTimerServiceEndTime()
         }
+    }
+
+    private fun resetTimerServiceEndTime() {
+        viewModelScope.launch(Dispatchers.IO) {
+            preferences.resetEndServiceTime()
+        }
+    }
+
+    private fun onDonePressed() {
+        _viewEvent.trySend(ViewEvent.CancelTimer)
+    }
+
+    private fun onDoneScreenShown() {
+        viewModelScope.launch(Dispatchers.IO) {
+            preferences.resetEndServiceTime()
+        }
+    }
+
+    private fun cancelTimer() {
+        _viewEvent.trySend(ViewEvent.CancelTimer)
+    }
+
+    private fun navigateToTutorial() {
+        _viewEvent.trySend(ViewEvent.NavigateTo(Screen.Intro.Destination.Tutorial.route))
+    }
+
+    private fun navigateToEggDetails() {
+        _viewEvent.trySend(ViewEvent.NavigateTo(Screen.BoilDetail.route))
     }
 
     private fun updateTimer(time: Int) {
         internalState.update {
+            if (time == 0) {
+                onFinishedTimer()
+            }
             it.copy(eggTimer = it.eggTimer.copy(time = time))
+        }
+    }
+
+    private fun onFinishedTimer() {
+        _viewEvent.trySend(ViewEvent.NavigateTo(Screen.Finished.route, clearStack = true))
+        viewModelScope.launch(Dispatchers.IO) {
+            preferences.resetEndServiceTime()
         }
     }
 
@@ -101,10 +145,15 @@ class MainViewModel @Inject constructor(
         _viewEvent.trySend(ViewEvent.StartTimerService(boilingTime))
     }
 
-    private fun getStartDestination(): String = when {
-        internalState.value.isTimerServiceRunning -> Screen.Timer.route
-        preferences.getUserInfo().userStep == ScreenStep.TUTORIAL -> Screen.Intro.route
-        else -> Screen.BoilDetail.route
+    private fun getStartDestination(): String {
+        val isServiceRunning = preferences.isServiceRunning()
+        val isServiceEndedInLastTenMinutes = preferences.isServiceEndedInLastTenMinutes()
+
+        return when {
+            isServiceRunning -> Screen.Timer.route
+            isServiceEndedInLastTenMinutes -> Screen.Finished.route
+            else -> Screen.Intro.route
+        }
     }
 
     private fun getEggDetailsFromPreferences() = preferences.getEggDetails().toUiModel()
@@ -181,7 +230,6 @@ class MainViewModel @Inject constructor(
         val tutorialCurrentStep: Int = 0,
         val eggDetails: EggDetailsUiModel,
         val eggTimer: EggTimerUiModel,
-        val isTimerServiceRunning: Boolean,
     )
 
     sealed class ViewAction {
@@ -194,13 +242,21 @@ class MainViewModel @Inject constructor(
         data object UpdateBoilingTime : ViewAction()
         data object StartTimer : ViewAction()
         data class UpdateTimber(val time: Int) : ViewAction()
+        data object CancelTimer : ViewAction()
+        data object OnDonePressed : ViewAction()
+        data object OnDoneScreenShown : ViewAction()
+        data object NavigateToTutorial : ViewAction()
+        data object NavigateToEggDetails : ViewAction()
+        data object NavigateBack : ViewAction()
         data class Init(val isTimerServiceRunning: Boolean) : ViewAction()
+        data object ResetTimerServiceEndTime : ViewAction()
     }
 
     sealed class ViewEvent {
         data class StartTimerService(val boilingTime: Int) : ViewEvent()
         data object NavigateBack : ViewEvent()
         data object OpenNextPage : ViewEvent()
+        data class NavigateTo(val route: String, val clearStack: Boolean = false) : ViewEvent()
+        data object CancelTimer : ViewEvent()
     }
 }
-
