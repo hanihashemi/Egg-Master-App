@@ -9,8 +9,6 @@
     <string name="splash_screen_button_contact_me">Contactez-nous</string>
 
     <!--Contact Me-->
-    <string name="contact_me_email">jhanihashemi+eggmaster@gmail.com</string>
-    <string name="contact_me_subject">Retour d\'information pour Maître des Œufs</string>
     <string name="contact_me_body">
         Veuillez fournir vos commentaires ici :\n\n1. Rapports de bogues.\n2. Demandes de fonctionnalités.\n3. Commentaires généraux.\n
     </string>

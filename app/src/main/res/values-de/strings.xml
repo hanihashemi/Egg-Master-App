@@ -9,8 +9,6 @@
     <string name="splash_screen_button_contact_me">Kontaktieren Sie uns</string>
 
     <!--Contact Me-->
-    <string name="contact_me_email">jhanihashemi+eggmaster@gmail.com</string>
-    <string name="contact_me_subject">Feedback für Eier Meister</string>
     <string name="contact_me_body">
         Bitte geben Sie hier Ihr Feedback ein:\n\n1. Fehlerberichte.\n2. Funktionswünsche.\n3. Allgemeines Feedback.\n
     </string>

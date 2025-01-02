@@ -9,8 +9,6 @@
     <string name="splash_screen_button_contact_me">تماس با ما</string>
 
     <!--Contact Me-->
-    <string name="contact_me_email">jhanihashemi+eggmaster@gmail.com</string>
-    <string name="contact_me_subject">بازخورد برای استاد تخم مرغ</string>
     <string name="contact_me_body">
         لطفاً بازخورد خود را اینجا ارائه دهید:\n\n1. گزارش‌های خطا.\n2. درخواست‌های ویژگی.\n3. بازخورد عمومی.\n
     </string>

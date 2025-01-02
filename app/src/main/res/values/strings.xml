@@ -9,8 +9,8 @@
     <string name="splash_screen_button_contact_me">Contact Us</string>
 
     <!--Contact Me-->
-    <string name="contact_me_email">jhanihashemi+eggmaster@gmail.com</string>
-    <string name="contact_me_subject">Feedback for Egg Master</string>
+    <string name="contact_me_email" translatable="false">jhanihashemi+eggmaster@gmail.com</string>
+    <string name="contact_me_subject" translatable="false">Feedback for Egg Master</string>
     <string name="contact_me_body">
         Please provide your feedback here:\n\n1. Bug reports.\n2. Feature requests.\n3. General feedback.\n
     </string>
