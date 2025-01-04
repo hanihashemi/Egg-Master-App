@@ -73,15 +73,16 @@ class TimerService : Service() {
     }
 
     private fun startTimer(timeInMillis: Int) {
-        val content = getString(
-            R.string.timer_service_notification_timer_running,
-            remainingTime.formatSecondsToMinutes()
-        )
         remainingTime = timeInMillis
         job = CoroutineScope(Dispatchers.Default).launch {
             preferences.saveStartTimerServiceData()
             while (remainingTime > 0) {
                 val progress = timeInMillis - remainingTime
+                val content = getString(
+                    R.string.timer_service_notification_timer_running,
+                    remainingTime.formatSecondsToMinutes()
+                )
+
                 sendTimeUpdate()
                 updateNotification(
                     content,
