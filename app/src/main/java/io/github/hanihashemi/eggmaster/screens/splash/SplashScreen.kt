@@ -1,8 +1,5 @@
 package io.github.hanihashemi.eggmaster.screens.splash
 
-import android.content.Intent
-import android.net.Uri
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -71,7 +68,7 @@ fun SplashScreen(dispatch: (MainViewModel.ViewAction) -> Unit) {
                         Button(
                             text = stringResource(R.string.splash_screen_button_contact_me),
                             style = ButtonDefaultStyles.Transparent,
-                        ) { openEmailIntent(context) }
+                        ) { dispatch.invoke(MainViewModel.ViewAction.NavigateToContactUs) }
                     }
                 }
             }
@@ -147,32 +144,6 @@ private fun Title(modifier: Modifier, displaySubtitle: Boolean = true) {
     }
 }
 
-private fun openEmailIntent(context: android.content.Context) {
-    val email = context.getString(R.string.contact_me_email)
-    val subject = context.getString(R.string.contact_me_subject)
-    val body = context.getString(R.string.contact_me_body)
-    val noEmailApp = context.getString(R.string.contact_me_no_email_app)
-
-    val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
-        data = Uri.parse("mailto:")
-        putExtra(
-            Intent.EXTRA_EMAIL,
-            arrayOf(email)
-        )
-        putExtra(Intent.EXTRA_SUBJECT, subject)
-        putExtra(Intent.EXTRA_TEXT, body)
-    }
-
-    try {
-        context.startActivity(Intent.createChooser(emailIntent, subject))
-    } catch (ex: android.content.ActivityNotFoundException) {
-        Toast.makeText(
-            context,
-            noEmailApp,
-            Toast.LENGTH_SHORT
-        ).show()
-    }
-}
 
 @Composable
 private fun SplashScreenPreview() {

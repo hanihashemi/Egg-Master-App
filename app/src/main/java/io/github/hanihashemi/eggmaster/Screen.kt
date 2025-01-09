@@ -8,6 +8,8 @@ sealed class Screen(val route: String, val navArguments: List<NamedNavArgument> 
 
     data object BoilDetail : Destination("boilDetail")
 
+    data object ContactUs: Destination("contactUs")
+
     data object Intro : Screen("intro") {
         sealed class Destination(val route: String) {
             data object Title : Destination("title")

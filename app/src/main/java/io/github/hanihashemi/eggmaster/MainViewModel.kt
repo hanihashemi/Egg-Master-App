@@ -93,7 +93,12 @@ class MainViewModel @Inject constructor(
             is ViewAction.NavigateBack -> _viewEvent.trySend(ViewEvent.NavigateBack)
             is ViewAction.Init -> init(action.isTimerServiceRunning)
             is ViewAction.ResetTimerServiceEndTime -> resetTimerServiceEndTime()
+            is ViewAction.NavigateToContactUs -> navigateToContactUs()
         }
+    }
+
+    private fun navigateToContactUs() {
+        _viewEvent.trySend(ViewEvent.NavigateTo(Screen.ContactUs.route))
     }
 
     private fun resetTimerServiceEndTime() {
@@ -250,6 +255,7 @@ class MainViewModel @Inject constructor(
         data object NavigateBack : ViewAction()
         data class Init(val isTimerServiceRunning: Boolean) : ViewAction()
         data object ResetTimerServiceEndTime : ViewAction()
+        data object NavigateToContactUs : ViewAction()
     }
 
     sealed class ViewEvent {

@@ -78,4 +78,20 @@
     <string name="timer_service_notification_title">Timer-Dienst</string>
     <string name="timer_service_notification_finished_title">Eier-Timer</string>
     <string name="timer_service_notification_finished_content">Ihr Ei ist fertig!</string>
+    <string name="contact_us_screen_description">
+        Hallo! Ich bin Hani, der Ersteller dieser App und ein begeisterter Android-Entwickler. Wenn Sie mich direkt kontaktieren möchten, freue ich mich darauf, von Ihnen zu hören! Egal, ob Sie eine Frage, eine Anregung haben oder einfach nur über die App plaudern möchten, zögern Sie nicht, mich jederzeit zu kontaktieren.
+        \n\n
+        Haben Sie Feedback, das Sie teilen möchten? Ihre Gedanken sind von unschätzbarem Wert, um diese App zu verbessern. Lassen Sie mich wissen, was Sie denken, oder schlagen Sie Verbesserungen vor—ich höre immer auf Nutzer wie Sie, um die Erfahrung angenehmer und nützlicher zu gestalten.
+        \n\n
+        Interessiert am Alpha-Test-Programm? Werden Sie Teil dieser spannenden Reise! Als Alpha-Tester erhalten Sie frühzeitig Zugriff auf Funktionen und können die Zukunft der App mitgestalten. Lassen Sie mich wissen, ob Sie teilnehmen möchten!
+    </string>
+
+    <string name="contact_us_screen_button_youtube">Mein YouTube-Kanal</string>
+    <string name="contact_us_screen_button_email_feedback">Feedback senden</string>
+    <string name="contact_us_screen_button_join_alpha_testing">Am Alpha-Test teilnehmen</string>
+    <string name="contact_us_join_alpha_body">
+        Ich bin daran interessiert, am Alpha-Test-Programm Ihrer App teilzunehmen.
+    </string>
+    <string name="contact_us_youtube_channel_not_found">YouTube-Kanal kann nicht geöffnet werden.</string>
+
 </resources>

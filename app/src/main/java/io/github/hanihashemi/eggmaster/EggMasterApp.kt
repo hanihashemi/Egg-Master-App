@@ -6,13 +6,13 @@ import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import io.github.hanihashemi.eggmaster.screens.boilingdone.BoilingDoneScreen
 import io.github.hanihashemi.eggmaster.screens.boilingtimer.BoilingTimerScreen
+import io.github.hanihashemi.eggmaster.screens.contactme.ContactUsScreen
 import io.github.hanihashemi.eggmaster.screens.eggboildetails.EggBoilDetailsScreen
 import io.github.hanihashemi.eggmaster.screens.splash.SplashScreen
 import io.github.hanihashemi.eggmaster.screens.tutorial.TutorialScreen
@@ -119,6 +119,10 @@ private fun EggMasterNavHost(
             composable(Screen.Finished.Destination.BoilFinish.route) {
                 BoilingDoneScreen(dispatch = viewModel::dispatch)
             }
+        }
+
+        composable(Screen.ContactUs.route) {
+            ContactUsScreen(dispatch = viewModel::dispatch)
         }
     }
 }

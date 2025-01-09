@@ -8,14 +8,6 @@
     <string name="splash_screen_button_tutorial">How to Use</string>
     <string name="splash_screen_button_contact_me">Contact Us</string>
 
-    <!--Contact Me-->
-    <string name="contact_me_email" translatable="false">jhanihashemi+eggmaster@gmail.com</string>
-    <string name="contact_me_subject" translatable="false">Feedback for Egg Master</string>
-    <string name="contact_me_body">
-        Please provide your feedback here:\n\n1. Bug reports.\n2. Feature requests.\n3. General feedback.\n
-    </string>
-    <string name="contact_me_no_email_app">No email clients installed.</string>
-
     <!--Intro Screen-->
     <!--Info Card-->
     <string name="intro_info_text_1">Always place the eggs\nin boiling water.</string>
@@ -80,4 +72,35 @@
     <string name="timer_service_notification_title">Timer Service</string>
     <string name="timer_service_notification_finished_title">Egg Timer</string>
     <string name="timer_service_notification_finished_content">Your egg is ready!</string>
+
+    <!-- Contact Us -->
+    <string name="contact_us_screen_description">
+        Hi there! I\'m Hani, the creator of this app and an enthusiastic Android developer. If you’d like to reach out directly, I’d love to hear from you! Whether you have a question, a suggestion, or just want to chat about the app, feel free to contact me anytime.
+        \n\n
+        Have feedback to share? Your thoughts are invaluable in making this app better. Let me know what you think or suggest improvements—I’m always listening to users like you to make things more enjoyable and useful.
+        \n\n
+        Interested in joining our alpha testing program? Be part of the exciting journey! As an alpha tester, you’ll get early access to features and help shape the app’s future. Let me know if you’d like to volunteer!
+    </string>
+    <string name="contact_us_screen_button_youtube">My Youtube Channel</string>
+    <string name="contact_us_screen_button_email_feedback">Send Feedback</string>
+    <string name="contact_us_screen_button_join_alpha_testing">Join Alpha Testing</string>"
+
+    <!-- Contact Us Feedback Email -->
+    <string name="contact_me_email" translatable="false">jhanihashemi+eggmaster@gmail.com</string>
+    <string name="contact_me_subject" translatable="false">Feedback for Egg Master</string>
+    <string name="contact_me_body">
+        Please provide your feedback here:\n\n1. Bug reports.\n2. Feature requests.\n3. General feedback.\n
+    </string>
+    <string name="contact_me_no_email_app">No email clients installed.</string>
+
+    <!-- Contact Us Join Alpha Testing Email -->
+    <string name="contact_us_join_alpha_testing_subject" translatable="false">Alpha Testing Volunteer for Egg Master</string>
+    <string name="contact_us_join_alpha_body">
+        I’m interested in joining the alpha testing program for your app.
+    </string>
+
+    <!-- Contact Us Youtube Channel -->
+    <string name="contact_us_youtube_channel_url" translatable="false">https://www.youtube.com/@HaniTech</string>
+    <string name="contact_us_youtube_channel_not_found">Not able to open YouTube channel.</string>
+
 </resources>

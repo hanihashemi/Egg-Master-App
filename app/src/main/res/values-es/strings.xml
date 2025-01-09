@@ -78,4 +78,20 @@
     <string name="timer_service_notification_title">Servicio de Temporizador</string>
     <string name="timer_service_notification_finished_title">Temporizador de Huevos</string>
     <string name="timer_service_notification_finished_content">¡Tu huevo está listo!</string>
+    <string name="contact_us_screen_description">
+        ¡Hola! Soy Hani, el creador de esta aplicación y un desarrollador de Android entusiasta. Si deseas ponerte en contacto conmigo directamente, ¡me encantaría saber de ti! Ya sea que tengas una pregunta, una sugerencia o simplemente quieras hablar sobre la aplicación, no dudes en contactarme en cualquier momento.
+        \n\n
+        ¿Tienes comentarios para compartir? Tus opiniones son invaluables para mejorar esta aplicación. Hazme saber qué piensas o sugiere mejoras—siempre estoy atento a usuarios como tú para hacer que la experiencia sea más agradable y útil.
+        \n\n
+        ¿Te interesa unirte a nuestro programa de pruebas alfa? ¡Sé parte de esta emocionante aventura! Como tester alfa, tendrás acceso anticipado a las funciones y podrás ayudar a dar forma al futuro de la aplicación. ¡Avísame si deseas participar!
+    </string>
+
+    <string name="contact_us_screen_button_youtube">Mi canal de YouTube</string>
+    <string name="contact_us_screen_button_email_feedback">Enviar comentarios</string>
+    <string name="contact_us_screen_button_join_alpha_testing">Unirme a las pruebas alfa</string>
+    <string name="contact_us_join_alpha_body">
+        Estoy interesado(a) en unirme al programa de pruebas alfa de tu aplicación.
+    </string>
+    <string name="contact_us_youtube_channel_not_found">No se puede abrir el canal de YouTube.</string>
+
 </resources>
