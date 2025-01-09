@@ -79,7 +79,7 @@ fun EggBoilDetailsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
-            contentAlignment = Alignment.Center,
+            contentAlignment = Alignment.TopCenter,
         ) {
             Column(
                 modifier = Modifier
@@ -173,11 +173,11 @@ fun EggBoilDetailsScreen(
                         iconId = R.drawable.ic_egg_boiled_soft,
                         isSelect = state.eggDetails.boiledType == EggBoiledType.SOFT,
                         onClick = { dispatch(OnEggBoiledTypePressed(EggBoiledType.SOFT)) })
-                    OutlinedToggleImageButton(text = stringResource(R.string.egg_boil_details_screen_button_size_medium),
+                    OutlinedToggleImageButton(text = stringResource(R.string.egg_boil_details_screen_button_type_medium),
                         iconId = R.drawable.ic_egg_boiled_medium,
                         isSelect = state.eggDetails.boiledType == EggBoiledType.MEDIUM,
                         onClick = { dispatch(OnEggBoiledTypePressed(EggBoiledType.MEDIUM)) })
-                    OutlinedToggleImageButton(text = stringResource(R.string.egg_boil_details_screen_button_size_large),
+                    OutlinedToggleImageButton(text = stringResource(R.string.egg_boil_details_screen_button_type_hard),
                         iconId = R.drawable.ic_egg_boiled_hard,
                         isSelect = state.eggDetails.boiledType == EggBoiledType.HARD,
                         onClick = { dispatch(OnEggBoiledTypePressed(EggBoiledType.HARD)) })
@@ -223,3 +223,7 @@ fun MediumPreview() = EggBoilDetailsScreenPreview()
 @Preview(device = "id:small_phone")
 @Composable
 fun SmallPreview() = EggBoilDetailsScreenPreview()
+
+@Preview(device = "id:Nexus 9")
+@Composable
+fun TabletPreview() = EggBoilDetailsScreenPreview()
