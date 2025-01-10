@@ -14,7 +14,7 @@ Egg Master is your ultimate companion for perfectly cooked eggs every time! Whet
 
 - **Website:** [Egg Master Official Website](https://hanihashemi.github.io/Egg-Master-App)  
 - **Privacy Policy:** [View Privacy Policy](https://hanihashemi.github.io/Egg-Master-App/privacy-policy/)  
-- **YouTube Channel:** [Watch Development Tutorials](https://youtube.com/)  
+- **YouTube Channel:** [Watch Development Tutorials](https://youtube.com/@HaniTech)  
   On my YouTube channel, I have shared detailed tutorials explaining how I developed this app step by step.
 
 ---
