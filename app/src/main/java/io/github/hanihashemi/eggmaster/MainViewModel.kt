@@ -212,21 +212,25 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private fun updateBoilingTime() {
+    private fun updateBoilingTime(boilingTime: Int = 0) {
         viewModelScope.launch(Dispatchers.IO) {
             val eggDetails = internalState.value.eggDetails
-            preferences.saveEggDetails(eggDetails.toDataModel())
-            val boilingTime = boilingTimeCalcUseCase.run(
-                BoilingTimeCalcUseCase.Params(
-                    eggCount = eggDetails.count,
-                    eggSize = eggDetails.size,
-                    eggTemp = eggDetails.temperature,
-                    boilType = eggDetails.boiledType,
+            val calculatedTime = if (eggDetails.isEggTimerMode) {
+                boilingTimeCalcUseCase.run(
+                    BoilingTimeCalcUseCase.Params(
+                        eggSize = eggDetails.size,
+                        eggTemp = eggDetails.temperature,
+                        boilType = eggDetails.boiledType,
+                    )
                 )
-            )
-
+            } else {
+                val savedBoilingTime = getEggTimerFromPreferences().time
+                if (boilingTime == 0) savedBoilingTime else boilingTime * 60
+            }
+            preferences.saveEggDetails(eggDetails.toDataModel())
+            preferences.saveEggTimer(EggTimerDataModel(calculatedTime))
             internalState.update {
-                it.copy(eggDetails = it.eggDetails.copy(boilingTime = boilingTime))
+                it.copy(eggDetails = it.eggDetails.copy(boilingTime = calculatedTime))
             }
         }
     }
@@ -244,7 +248,7 @@ class MainViewModel @Inject constructor(
         data class OnEggSizePressed(val eggSize: EggSize) : ViewAction()
         data class OnEggCountChanged(val eggCount: Int) : ViewAction()
         data class OnEggBoiledTypePressed(val eggBoiledType: EggBoiledType) : ViewAction()
-        data object UpdateBoilingTime : ViewAction()
+        data class UpdateBoilingTime(val boilingTime: Int = 0) : ViewAction()
         data object StartTimer : ViewAction()
         data class UpdateTimber(val time: Int) : ViewAction()
         data object CancelTimer : ViewAction()

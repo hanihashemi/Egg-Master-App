@@ -12,7 +12,6 @@ class BoilingTimeCalcUseCase @Inject constructor() {
             size = params.eggSize.ordinal,
             initialTemp = params.eggTemp.ordinal,
             yolkTemp = params.boilType.ordinal,
-            count = params.eggCount,
         )
     }
 
@@ -20,23 +19,19 @@ class BoilingTimeCalcUseCase @Inject constructor() {
         size: Int,
         initialTemp: Int,
         yolkTemp: Int,
-        count: Int,
     ): Int {
-        val sizeFactor = 25
-        val tempFactor = 50
-        val yolkFactor = 60
-        val countFactor = 15
-        val baseTime = 210
+        val sizeFactor = 50
+        val tempFactor = 80
+        val yolkFactor = 80
+        val baseTime = 270
 
         return baseTime +
                 (size * sizeFactor) +
                 (initialTemp * tempFactor) +
-                (yolkTemp * yolkFactor) +
-                (count * countFactor)
+                (yolkTemp * yolkFactor)
     }
 
     data class Params(
-        val eggCount: Int,
         val eggSize: EggSize,
         val eggTemp: EggTemperature,
         val boilType: EggBoiledType,

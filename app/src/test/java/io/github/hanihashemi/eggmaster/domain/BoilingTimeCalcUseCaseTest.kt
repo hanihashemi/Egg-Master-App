@@ -12,19 +12,18 @@ class BoilingTimeCalcUseCaseTest {
 
     @ParameterizedTest
     @MethodSource("provideTestArgs")
-    fun `test boiling time`(testArgs: TestArgs) {
+    fun `test boiling time`(testArgs: TestArgs) = with(testArgs) {
         val boilingTime = BoilingTimeCalcUseCase().run(
             BoilingTimeCalcUseCase.Params(
-                eggTemp = testArgs.temperature,
-                eggCount = testArgs.count,
-                eggSize = testArgs.size,
-                boilType = testArgs.boiledType,
+                eggTemp = temperature,
+                eggSize = size,
+                boilType = boiledType,
             )
         )
 
         assertEquals(
             actual = boilingTime.formatSecondsToMinutes(),
-            expected = testArgs.expectedBoilingTime,
+            expected = expectedBoilingTime,
         )
     }
 
@@ -33,76 +32,148 @@ class BoilingTimeCalcUseCaseTest {
         data class TestArgs(
             val temperature: EggTemperature,
             val size: EggSize,
-            val count: Int,
             val boiledType: EggBoiledType,
             val expectedBoilingTime: String,
         )
 
         @JvmStatic
         fun provideTestArgs() = listOf(
-            // Room, Small, Soft, 1
+            // Room Temperature
+            // Small, Room, Soft
             TestArgs(
                 temperature = EggTemperature.ROOM,
                 size = EggSize.Small,
-                count = 1,
                 boiledType = EggBoiledType.SOFT,
-                expectedBoilingTime = "3:45",
+                expectedBoilingTime = "4:30",
             ),
-            // Fridge, Small, Soft, 1
+            // Small, Room, Medium
+            TestArgs(
+                temperature = EggTemperature.ROOM,
+                size = EggSize.Small,
+                boiledType = EggBoiledType.MEDIUM,
+                expectedBoilingTime = "5:50",
+            ),
+            // Small, Room, Hard
+            TestArgs(
+                temperature = EggTemperature.ROOM,
+                size = EggSize.Small,
+                boiledType = EggBoiledType.HARD,
+                expectedBoilingTime = "7:10",
+            ),
+
+            // Fridge Temperature
+            // Small, Fridge, Soft
             TestArgs(
                 temperature = EggTemperature.FRIDGE,
                 size = EggSize.Small,
-                count = 1,
                 boiledType = EggBoiledType.SOFT,
-                expectedBoilingTime = "4:35",
+                expectedBoilingTime = "5:50",
             ),
-            // Room, Medium, Soft, 1
+            // Small, Room, Medium
+            TestArgs(
+                temperature = EggTemperature.FRIDGE,
+                size = EggSize.Small,
+                boiledType = EggBoiledType.MEDIUM,
+                expectedBoilingTime = "7:10",
+            ),
+            // Small, Room, Hard
+            TestArgs(
+                temperature = EggTemperature.FRIDGE,
+                size = EggSize.Small,
+                boiledType = EggBoiledType.HARD,
+                expectedBoilingTime = "8:30",
+            ),
+
+            // Room Temperature
+            // Medium, Room, Soft
             TestArgs(
                 temperature = EggTemperature.ROOM,
                 size = EggSize.Medium,
-                count = 1,
                 boiledType = EggBoiledType.SOFT,
-                expectedBoilingTime = "4:10",
+                expectedBoilingTime = "5:20",
             ),
-            // Room, Large, Soft, 1
+            // Medium, Room, Medium
+            TestArgs(
+                temperature = EggTemperature.ROOM,
+                size = EggSize.Medium,
+                boiledType = EggBoiledType.MEDIUM,
+                expectedBoilingTime = "6:40",
+            ),
+            // Medium, Room, Hard
+            TestArgs(
+                temperature = EggTemperature.ROOM,
+                size = EggSize.Medium,
+                boiledType = EggBoiledType.HARD,
+                expectedBoilingTime = "8:00",
+            ),
+
+            // Fridge Temperature
+            // Medium, Fridge, Soft
+            TestArgs(
+                temperature = EggTemperature.FRIDGE,
+                size = EggSize.Medium,
+                boiledType = EggBoiledType.SOFT,
+                expectedBoilingTime = "6:40",
+            ),
+            // Medium, Room, Medium
+            TestArgs(
+                temperature = EggTemperature.FRIDGE,
+                size = EggSize.Medium,
+                boiledType = EggBoiledType.MEDIUM,
+                expectedBoilingTime = "8:00",
+            ),
+            // Medium, Room, Hard
+            TestArgs(
+                temperature = EggTemperature.FRIDGE,
+                size = EggSize.Medium,
+                boiledType = EggBoiledType.HARD,
+                expectedBoilingTime = "9:20",
+            ),
+
+            // Room Temperature
+            // Large, Room, Soft
             TestArgs(
                 temperature = EggTemperature.ROOM,
                 size = EggSize.Large,
-                count = 1,
                 boiledType = EggBoiledType.SOFT,
-                expectedBoilingTime = "4:35",
+                expectedBoilingTime = "6:10",
             ),
-            // Room, Small, MEDIUM, 1
+            // Large, Room, Medium
             TestArgs(
                 temperature = EggTemperature.ROOM,
-                size = EggSize.Small,
-                count = 1,
+                size = EggSize.Large,
                 boiledType = EggBoiledType.MEDIUM,
-                expectedBoilingTime = "4:45",
+                expectedBoilingTime = "7:30",
             ),
-            // Room, Small, HARD, 1
+            // Medium, Room, Hard
             TestArgs(
                 temperature = EggTemperature.ROOM,
-                size = EggSize.Small,
-                count = 1,
+                size = EggSize.Large,
                 boiledType = EggBoiledType.HARD,
-                expectedBoilingTime = "5:45",
+                expectedBoilingTime = "8:50",
             ),
-            // Room, Small, Soft, 2
+
+            // Fridge Temperature
+            // Large, Room, Soft
             TestArgs(
-                temperature = EggTemperature.ROOM,
-                size = EggSize.Small,
-                count = 2,
+                temperature = EggTemperature.FRIDGE,
+                size = EggSize.Large,
                 boiledType = EggBoiledType.SOFT,
-                expectedBoilingTime = "4:00",
+                expectedBoilingTime = "7:30",
             ),
-            // Room, Small, Soft, 3
+            // Large, Room, Medium
             TestArgs(
-                temperature = EggTemperature.ROOM,
-                size = EggSize.Small,
-                count = 3,
-                boiledType = EggBoiledType.SOFT,
-                expectedBoilingTime = "4:15",
+                temperature = EggTemperature.FRIDGE,
+                size = EggSize.Large,
+                boiledType = EggBoiledType.MEDIUM,
+                expectedBoilingTime = "8:50",
+            ),
+            // Medium, Room, Hard
+            TestArgs(
+                temperature = EggTemperature.FRIDGE,
+                size = EggSize.Large,
+                boiledType = EggBoiledType.HARD,
+                expectedBoilingTime = "10:10",
             ),
         )
     }
