@@ -4,7 +4,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Shapes
 import androidx.compose.ui.unit.dp
 
-// TODO: use this shapes
 val Shapes = Shapes(
     small = RoundedCornerShape(
         topStart = 0.dp,

@@ -78,21 +78,18 @@
     <string name="timer_service_notification_title">Service de minuteur</string>
     <string name="timer_service_notification_finished_title">Minuteur d\'œufs</string>
     <string name="timer_service_notification_finished_content">Votre œuf est prêt !</string>
-    <string name="contact_us_screen_description">
-        Bonjour ! Je suis Hani, le créateur de cette application et un développeur Android passionné. Si vous souhaitez me contacter directement, je serais ravi de vous entendre ! Que vous ayez une question, une suggestion ou simplement envie de discuter de l\'application, n\'hésitez pas à me contacter à tout moment.
-        \n\n
-        Vous avez des retours à partager ? Vos idées sont inestimables pour améliorer cette application. Faites-moi savoir ce que vous en pensez ou proposez des améliorations—je suis toujours à l\'écoute des utilisateurs comme vous pour rendre les choses plus agréables et utiles.
-        \n\n
-        Intéressé(e) par notre programme de test alpha ? Participez à cette aventure passionnante ! En tant que testeur alpha, vous aurez un accès anticipé aux fonctionnalités et pourrez contribuer à façonner l\'avenir de l\'application. Faites-moi savoir si vous souhaitez participer !
-    </string>
-
-
     <string name="contact_us_screen_button_youtube">Ma chaîne YouTube</string>
     <string name="contact_us_screen_button_email_feedback">Envoyer un retour</string>
     <string name="contact_us_screen_button_join_alpha_testing">Rejoindre le test alpha</string>
-    <string name="contact_us_join_alpha_body">
-        Je suis intéressé(e) pour rejoindre le programme de test alpha de votre application.
-    </string>
     <string name="contact_us_youtube_channel_not_found">Impossible d\'ouvrir la chaîne YouTube.</string>
+    <string name="contact_us_screen_description_1">
+    Bonjour ! Je suis Hani, le créateur de cette application. J’aimerais beaucoup avoir de tes nouvelles ! Que tu aies une question, une suggestion ou que tu veuilles simplement discuter de l’application, n’hésite pas à me contacter à tout moment.
+</string>
+    <string name="contact_us_screen_description_2">
+    Intéressé par notre programme de test alpha ? Appuie sur le bouton "Rejoindre le test alpha" ci-dessous et rejoins le groupe Google pour un accès anticipé.
+</string>
+    <string name="contact_us_join_alpha_testing_no_chrome">
+    Impossible d’ouvrir le groupe Google.
+</string>
 
 </resources>

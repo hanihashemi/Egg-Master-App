@@ -74,12 +74,11 @@
     <string name="timer_service_notification_finished_content">Your egg is ready!</string>
 
     <!-- Contact Us -->
-    <string name="contact_us_screen_description">
-        Hi there! I\'m Hani, the creator of this app and an enthusiastic Android developer. If you’d like to reach out directly, I’d love to hear from you! Whether you have a question, a suggestion, or just want to chat about the app, feel free to contact me anytime.
-        \n\n
-        Have feedback to share? Your thoughts are invaluable in making this app better. Let me know what you think or suggest improvements—I’m always listening to users like you to make things more enjoyable and useful.
-        \n\n
-        Interested in joining our alpha testing program? Be part of the exciting journey! As an alpha tester, you’ll get early access to features and help shape the app’s future. Let me know if you’d like to volunteer!
+    <string name="contact_us_screen_description_1">
+        Hi there! I\'m Hani, the creator of this app. I’d love to hear from you! Whether you have a question, a suggestion, or just want to chat about the app, feel free to contact me anytime.
+    </string>
+    <string name="contact_us_screen_description_2">
+        Interested in joining our alpha testing program? Tap on the Join Alpha Testing button below. and Join Google Group for early access.
     </string>
     <string name="contact_us_screen_button_youtube">My Youtube Channel</string>
     <string name="contact_us_screen_button_email_feedback">Send Feedback</string>
@@ -93,11 +92,9 @@
     </string>
     <string name="contact_me_no_email_app">No email clients installed.</string>
 
-    <!-- Contact Us Join Alpha Testing Email -->
-    <string name="contact_us_join_alpha_testing_subject" translatable="false">Alpha Testing Volunteer for Egg Master</string>
-    <string name="contact_us_join_alpha_body">
-        I’m interested in joining the alpha testing program for your app.
-    </string>
+    <!-- Contact Us Join Alpha Testing -->
+    <string name="contact_us_join_alpha_testing_google_group_url" translatable="false">https://groups.google.com/g/egg-master-app</string>
+    <string name="contact_us_join_alpha_testing_no_chrome">Not able to open Google Group.</string>
 
     <!-- Contact Us Youtube Channel -->
     <string name="contact_us_youtube_channel_url" translatable="false">https://www.youtube.com/@HaniTech</string>

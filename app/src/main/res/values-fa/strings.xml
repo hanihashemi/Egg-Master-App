@@ -78,20 +78,18 @@
     <string name="timer_service_notification_title">سرویس تایمر</string>
     <string name="timer_service_notification_finished_title">تای��ر تخم مرغ</string>
     <string name="timer_service_notification_finished_content">تخم مرغ شما آماده است!</string>
-    <string name="contact_us_screen_description">
-        سلام! من هانی هستم، سازنده این اپلیکیشن و یک توسعه‌دهنده مشتاق اندروید. اگر دوست دارید مستقیماً با من ارتباط بگیرید، خوشحال می‌شوم از شما بشنوم! اگر سوالی، پیشنهادی دارید یا فقط می‌خواهید درباره این اپلیکیشن گپ بزنید، در هر زمان با من تماس بگیرید.
-        \n\n
-        آیا نظری برای به اشتراک گذاشتن دارید؟ نظرات شما در بهبود این اپلیکیشن بسیار ارزشمند است. به من بگویید که چه فکری می‌کنید یا پیشنهادات خود را ارائه دهید—من همیشه به کاربران مانند شما گوش می‌دهم تا تجربه را لذت‌بخش‌تر و مفیدتر کنم.
-        \n\n
-        علاقه‌مند به شرکت در برنامه تست آلفا ما هستید؟ بخشی از این سفر هیجان‌انگیز باشید! به عنوان یک تست‌کننده آلفا، به ویژگی‌ها زودتر دسترسی خواهید داشت و می‌توانید به شکل‌گیری آینده اپلیکیشن کمک کنید. اگر مایل به همکاری هستید، به من اطلاع دهید!
-    </string>
-
     <string name="contact_us_screen_button_youtube">کانال یوتیوب من</string>
     <string name="contact_us_screen_button_email_feedback">ارسال بازخورد</string>
     <string name="contact_us_screen_button_join_alpha_testing">شرکت در تست آلفا</string>
-    <string name="contact_us_join_alpha_body">
-        من علاقه‌مند به شرکت در برنامه تست آلفا اپلیکیشن شما هستم.
-    </string>
     <string name="contact_us_youtube_channel_not_found">امکان باز کردن کانال یوتیوب وجود ندارد.</string>
+    <string name="contact_us_screen_description_1">
+    سلام! من هانی هستم، سازنده این اپلیکیشن. خیلی دوست دارم نظرات شما را بشنوم! اگر سوالی دارید، پیشنهادی دارید یا فقط می‌خواهید درباره اپلیکیشن صحبت کنید، هر زمان که خواستید با من در تماس باشید.
+</string>
+    <string name="contact_us_screen_description_2">
+    علاقه‌مند به شرکت در برنامه تست آلفا هستید؟ روی دکمه "پیوستن به تست آلفا" در پایین ضربه بزنید و به گروه گوگل برای دسترسی زودهنگام بپیوندید.
+</string>
+    <string name="contact_us_join_alpha_testing_no_chrome">
+    امکان باز کردن گروه گوگل وجود ندارد.
+</string>
 
 </resources>

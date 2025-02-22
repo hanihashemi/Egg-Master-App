@@ -19,3 +19,5 @@ val YolkMouthColor = Color(0XFFFAA847)
 val YolkLeftEyeColor = Color(0XFFFFE0B3)
 val InactiveColor = Color(0x66FFFFFF)
 val ClockPointerColor = Color(0xFFEE9F51)
+
+val ContactUsLayoutBackgroundColor = Color(0x0CFFFFFF)
