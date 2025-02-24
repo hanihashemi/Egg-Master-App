@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.hanihashemi.eggmaster.data.models.EggDetailsDataModel
+import io.github.hanihashemi.eggmaster.data.models.EggTimerDataModel
 import io.github.hanihashemi.eggmaster.data.models.UserInfoDataModel
 import javax.inject.Inject
 
@@ -18,6 +19,7 @@ class EggMasterPreferences @Inject constructor(@ApplicationContext context: Cont
         private const val EGG_DETAILS_BOILED_TYPE_KEY = "boiledType"
         private const val TIMER_SERVICE_RUNNING_KEY = "isTimerRunning"
         private const val TIMER_SERVICE_END_TIME_KEY = "timerEndTime"
+        private const val TIMER_TIME_KEY = "timerTime"
         private const val USER_INFO_STEP_KEY = "userStep"
     }
 
@@ -38,6 +40,16 @@ class EggMasterPreferences @Inject constructor(@ApplicationContext context: Cont
         size = getEnum(EGG_DETAILS_SIZE_KEY, EggDetailsDataModel().size),
         count = sharedPreferences.getInt(EGG_DETAILS_COUNT_KEY, EggDetailsDataModel().count),
         boiledType = getEnum(EGG_DETAILS_BOILED_TYPE_KEY, EggDetailsDataModel().boiledType),
+    )
+
+    fun saveEggTimer(timer: EggTimerDataModel) = with(timer) {
+        sharedPreferences.edit()
+            .putInt(TIMER_TIME_KEY, time)
+            .apply()
+    }
+
+    fun getEggTimer(): EggTimerDataModel = EggTimerDataModel(
+        time = sharedPreferences.getInt(TIMER_TIME_KEY, EggTimerDataModel().time)
     )
 
     fun saveStartTimerServiceData() {

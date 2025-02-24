@@ -11,6 +11,10 @@ data class EggDetailsDataModel(
     val boiledType: EggBoiledType = EggBoiledType.MEDIUM,
 )
 
+data class EggTimerDataModel(
+    val time: Int = 0,
+)
+
 data class UserInfoDataModel(
     val userStep: ScreenStep = ScreenStep.TUTORIAL,
 )

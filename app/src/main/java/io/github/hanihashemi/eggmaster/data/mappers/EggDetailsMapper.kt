@@ -6,13 +6,11 @@ import io.github.hanihashemi.eggmaster.ui.models.EggDetailsUiModel
 fun EggDetailsDataModel.toUiModel(): EggDetailsUiModel = EggDetailsUiModel(
     temperature = temperature,
     size = size,
-    count = count,
     boiledType = boiledType,
 )
 
 fun EggDetailsUiModel.toDataModel(): EggDetailsDataModel = EggDetailsDataModel(
     temperature = temperature,
     size = size,
-    count = count,
     boiledType = boiledType,
 )

@@ -42,7 +42,7 @@ class MainViewModel @Inject constructor(
     private val internalState: MutableStateFlow<InternalState> = MutableStateFlow(
         InternalState(
             eggDetails = getEggDetailsFromPreferences(),
-            eggTimer = EggTimerUiModel(),
+            eggTimer = getEggTimerFromPreferences(),
         )
     )
     val viewState: StateFlow<UiState> = internalState
@@ -54,7 +54,7 @@ class MainViewModel @Inject constructor(
             initialValue = UiState(
                 eggDetails = getEggDetailsFromPreferences(),
                 startDestination = getStartDestination(),
-                eggTimer = EggTimerUiModel(),
+                eggTimer = getEggTimerFromPreferences(),
             ),
         )
 
@@ -163,6 +163,8 @@ class MainViewModel @Inject constructor(
 
     private fun getEggDetailsFromPreferences() = preferences.getEggDetails().toUiModel()
 
+    private fun getEggTimerFromPreferences() = preferences.getEggTimer().toUiModel()
+
     private fun onEggBoilPressed(eggBoiledType: EggBoiledType) {
         internalState.update {
             it.copy(eggDetails = it.eggDetails.copy(boiledType = eggBoiledType))
@@ -170,11 +172,13 @@ class MainViewModel @Inject constructor(
         updateBoilingTime()
     }
 
+    // Egg count does not affect boiling time!!
+    @Suppress("UNUSED_PARAMETER")
     private fun onEggCountChanged(eggCount: Int) {
-        internalState.update {
-            it.copy(eggDetails = it.eggDetails.copy(count = eggCount))
-        }
-        updateBoilingTime()
+//        internalState.update {
+//            it.copy(eggDetails = it.eggDetails.copy(count = eggCount))
+//        }
+//        updateBoilingTime()
     }
 
     private fun onEggSizePressed(eggSize: EggSize) {
