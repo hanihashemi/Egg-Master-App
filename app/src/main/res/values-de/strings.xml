@@ -92,4 +92,8 @@
     Google-Gruppe kann nicht geöffnet werden.
 </string>
 
+    <string name="egg_boil_details_screen_ruler_label_select_time">Zeit wählen</string>
+    <string name="egg_boil_details_screen_mode_egg_timer_label">Eieruhr</string>
+    <string name="egg_boil_details_screen_mode_custom_label">Eigene Einstellung</string>
+
 </resources>

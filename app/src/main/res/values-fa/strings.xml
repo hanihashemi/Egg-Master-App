@@ -91,5 +91,7 @@
     <string name="contact_us_join_alpha_testing_no_chrome">
     امکان باز کردن گروه گوگل وجود ندارد.
 </string>
-
+    <string name="egg_boil_details_screen_ruler_label_select_time">انتخاب زمان</string>
+    <string name="egg_boil_details_screen_mode_egg_timer_label">تایمر تخم مرغ</string>
+    <string name="egg_boil_details_screen_mode_custom_label">حالت دلخواه</string>
 </resources>

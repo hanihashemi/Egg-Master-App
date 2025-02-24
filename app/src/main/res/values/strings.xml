@@ -41,6 +41,9 @@
 
     <string name="egg_boil_details_screen_bottom_bar_title">Estimated Boiling Time</string>
     <string name="egg_boil_details_screen_bottom_bar_button_content_description_next">Next</string>
+    <string name="egg_boil_details_screen_ruler_label_select_time">Select Time</string>
+    <string name="egg_boil_details_screen_mode_egg_timer_label">Egg Timer</string>
+    <string name="egg_boil_details_screen_mode_custom_label">Custom Mode</string>
 
     <!--Egg Boil Timer Screen-->
     <string name="egg_boil_timer_screen_title">Boiling Timer</string>

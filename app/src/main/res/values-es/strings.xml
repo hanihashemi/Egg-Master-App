@@ -91,5 +91,7 @@
     <string name="contact_us_join_alpha_testing_no_chrome">
     No se puede abrir el grupo de Google.
 </string>
-
+    <string name="egg_boil_details_screen_ruler_label_select_time">Seleccionar tiempo</string>
+    <string name="egg_boil_details_screen_mode_egg_timer_label">Temporizador de huevos</string>
+    <string name="egg_boil_details_screen_mode_custom_label">Modo personalizado</string>
 </resources>

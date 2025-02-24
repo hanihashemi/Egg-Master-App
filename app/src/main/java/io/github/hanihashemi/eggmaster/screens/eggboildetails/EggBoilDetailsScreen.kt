@@ -103,7 +103,7 @@ fun EggBoilDetailsScreen(
                             .widthIn(120.dp),
                         isSelect = state.eggDetails.isEggTimerMode,
                         padding = PaddingValues(Dimens.PaddingXXSmall),
-                        text = "Egg Timer",
+                        text = stringResource(R.string.egg_boil_details_screen_mode_egg_timer_label),
                         shape = RoundedCornerShape(50.dp, 0.dp, 0.dp, 50.dp),
                         smallFontSizes = true,
                         onClick = { dispatch(MainViewModel.ViewAction.OnTimerModeChanged(true)) },
@@ -113,7 +113,7 @@ fun EggBoilDetailsScreen(
                             .widthIn(120.dp),
                         isSelect = !state.eggDetails.isEggTimerMode,
                         padding = PaddingValues(Dimens.PaddingXXSmall),
-                        text = "Custom Mode",
+                        text = stringResource(R.string.egg_boil_details_screen_mode_custom_label),
                         smallFontSizes = true,
                         shape = RoundedCornerShape(0.dp, 50.dp, 50.dp, 0.dp),
                         onClick = { dispatch(MainViewModel.ViewAction.OnTimerModeChanged(false)) },
@@ -132,7 +132,10 @@ fun EggBoilDetailsScreen(
                     ) {
                         Spacer(modifier = Modifier.height(screenHeightDp / 8))
 
-                        HeadLine("Select Time", addEggPrefix = false)
+                        HeadLine(
+                            textBold = stringResource(R.string.egg_boil_details_screen_ruler_label_select_time),
+                            addEggPrefix = false
+                        )
 
                         RulerTimePicker(maxValue = 90) { value ->
                             dispatch(UpdateBoilingTime(value))
