@@ -8,6 +8,7 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ServiceInfo
+import android.media.MediaPlayer
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
@@ -54,7 +55,7 @@ class TimerService : Service() {
         startForeground()
         val timeInMillis = intent?.getIntExtra(BOILING_TIME_PARAM, 0) ?: 0
         startTimer(timeInMillis)
-        return START_NOT_STICKY
+        return START_STICKY
     }
 
     private fun startForeground() {
@@ -74,7 +75,7 @@ class TimerService : Service() {
 
     private fun startTimer(timeInMillis: Int) {
         remainingTime = timeInMillis
-        job = CoroutineScope(Dispatchers.Default).launch {
+        job = CoroutineScope(Dispatchers.IO).launch {
             preferences.saveStartTimerServiceData()
             while (remainingTime > 0) {
                 val progress = timeInMillis - remainingTime
@@ -95,7 +96,6 @@ class TimerService : Service() {
             sendTimeUpdate()
             showCompletionNotification()
             preferences.saveEndTimerServiceData()
-            stopSelf()
         }
     }
 
@@ -157,11 +157,20 @@ class TimerService : Service() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
 
+        MediaPlayer.create(this, R.raw.ding)?.also { mediaPlayer ->
+            mediaPlayer.setOnCompletionListener {
+                mediaPlayer.release()
+                stopSelf()
+            }
+            mediaPlayer.start()
+        }
+
         val notification = NotificationCompat.Builder(this, CHANNEL)
             .setContentTitle(title)
             .setContentText(content)
             .setSmallIcon(R.drawable.ic_egg)
             .setContentIntent(pendingIntent)
+            .setSilent(true)
             .build()
 
         val notificationManager =
