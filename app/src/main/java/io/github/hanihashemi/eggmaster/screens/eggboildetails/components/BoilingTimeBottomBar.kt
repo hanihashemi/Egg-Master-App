@@ -44,10 +44,10 @@ import io.github.hanihashemi.eggmaster.ui.theme.EggMasterTheme
 import io.github.hanihashemi.eggmaster.ui.theme.Shapes
 
 @Composable
-fun BoilingTimeBottomBar(state: UiState, onClick: () -> Unit = {}) {
+fun BoilingTimeBottomBar(boilingTime: Int, onClick: () -> Unit = {}) {
 
     val animatedSeconds by animateIntAsState(
-        targetValue = state.eggDetails.boilingTime,
+        targetValue = boilingTime,
         animationSpec = tween(
             durationMillis = 2000,
             easing = FastOutSlowInEasing,
@@ -122,11 +122,7 @@ fun BoilingTimeBottomBar(state: UiState, onClick: () -> Unit = {}) {
 fun BottomBarButtonPreview() {
     EggMasterTheme {
         BoilingTimeBottomBar(
-            state = UiState(
-                eggDetails = EggDetailsUiModel(),
-                startDestination = "",
-                eggTimer = EggTimerUiModel(),
-            ),
+            boilingTime = 300,
             onClick = {},
         )
     }
