@@ -8,6 +8,7 @@ import io.github.hanihashemi.eggmaster.MainViewModel.ViewAction.TutorialNextPres
 import io.github.hanihashemi.eggmaster.MainViewModel.ViewAction.TutorialPreviousPressed
 import io.github.hanihashemi.eggmaster.data.mappers.toDataModel
 import io.github.hanihashemi.eggmaster.data.mappers.toUiModel
+import io.github.hanihashemi.eggmaster.data.models.EggTimerDataModel
 import io.github.hanihashemi.eggmaster.data.models.ScreenStep
 import io.github.hanihashemi.eggmaster.data.models.UserInfoDataModel
 import io.github.hanihashemi.eggmaster.data.preferences.EggMasterPreferences
@@ -82,7 +83,7 @@ class MainViewModel @Inject constructor(
             is ViewAction.OnEggSizePressed -> onEggSizePressed(action.eggSize)
             is ViewAction.OnEggCountChanged -> onEggCountChanged(action.eggCount)
             is ViewAction.OnEggBoiledTypePressed -> onEggBoilPressed(action.eggBoiledType)
-            is ViewAction.UpdateBoilingTime -> updateBoilingTime()
+            is ViewAction.UpdateBoilingTime -> updateBoilingTime(action.boilingTime)
             is ViewAction.StartTimer -> startTimer()
             is ViewAction.UpdateTimber -> updateTimer(action.time)
             is ViewAction.CancelTimer -> cancelTimer()
@@ -94,7 +95,20 @@ class MainViewModel @Inject constructor(
             is ViewAction.Init -> init(action.isTimerServiceRunning)
             is ViewAction.ResetTimerServiceEndTime -> resetTimerServiceEndTime()
             is ViewAction.NavigateToContactUs -> navigateToContactUs()
+            is ViewAction.OnTimerModeChanged -> onTimerModeChanged(action.isEggTimerMode)
         }
+    }
+
+    private fun onTimerModeChanged(isEggTimerMode: Boolean) {
+        internalState.update {
+            it.copy(
+                eggDetails = it.eggDetails.copy(
+                    isEggTimerMode = isEggTimerMode,
+                    boilingTime = 300,
+                )
+            )
+        }
+        updateBoilingTime()
     }
 
     private fun navigateToContactUs() {
@@ -264,6 +278,7 @@ class MainViewModel @Inject constructor(
         data class Init(val isTimerServiceRunning: Boolean) : ViewAction()
         data object ResetTimerServiceEndTime : ViewAction()
         data object NavigateToContactUs : ViewAction()
+        data class OnTimerModeChanged(val isEggTimerMode: Boolean) : ViewAction()
     }
 
     sealed class ViewEvent {
