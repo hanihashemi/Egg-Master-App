@@ -20,6 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,15 +34,19 @@ import io.github.hanihashemi.eggmaster.ui.theme.EggMasterTheme
 @Composable
 fun RulerTimePicker(
     modifier: Modifier = Modifier,
+    value: Int,
     maxValue: Int,
-    onValueChange: (Int) -> Unit
+    onValueChange: (Int) -> Unit,
 ) {
-    val scrollState = rememberLazyListState(initialFirstVisibleItemIndex = 5)
-    var selectedValue by remember { mutableIntStateOf(5) }
+    val scrollState = rememberLazyListState(initialFirstVisibleItemIndex = value)
+    var selectedValue by remember { mutableIntStateOf(value) }
 
-    LaunchedEffect(scrollState.firstVisibleItemScrollOffset) {
-        selectedValue = scrollState.firstVisibleItemIndex
-        onValueChange(selectedValue)
+    LaunchedEffect(scrollState) {
+        snapshotFlow { scrollState.firstVisibleItemScrollOffset }
+            .collect {
+                selectedValue = scrollState.firstVisibleItemIndex
+                onValueChange(selectedValue)
+            }
     }
 
     BoxWithConstraints {
@@ -51,7 +56,10 @@ fun RulerTimePicker(
 
     BoxWithConstraints(
         modifier = modifier
-            .padding(vertical = Dimens.PaddingXXLarge)
+            .padding(
+                vertical = Dimens
+                    .PaddingXXLarge
+            )
             .height(150.dp)
             .fillMaxWidth()
     ) {
@@ -60,14 +68,14 @@ fun RulerTimePicker(
         LazyRow(
             state = scrollState,
             contentPadding = PaddingValues(horizontal = boxWithConstraintsScope.maxWidth / 2 - 4.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(100.dp)
         ) {
             items(maxValue + 1) { value ->
                 Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Box(
                         modifier = Modifier
@@ -79,7 +87,7 @@ fun RulerTimePicker(
                         Text(
                             text = value.toString(),
                             color = Color.LightGray,
-                            fontSize = 18.sp,
+                            fontSize = 16.sp,
                             modifier = Modifier.offset(y = 4.dp)
                         )
                     }
@@ -113,7 +121,8 @@ private fun RulerTimePickerPreview() {
     EggMasterTheme {
         RulerTimePicker(
             maxValue = 60,
-            onValueChange = {}
+            value = 10,
+            onValueChange = {},
         )
     }
 }

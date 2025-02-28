@@ -104,7 +104,7 @@ class MainViewModel @Inject constructor(
             it.copy(
                 eggDetails = it.eggDetails.copy(
                     isEggTimerMode = isEggTimerMode,
-                    boilingTime = 300,
+                    boilingTime = getEggTimerFromPreferences().time,
                 )
             )
         }
@@ -160,7 +160,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun startTimer() {
-        val boilingTime = internalState.value.eggDetails.boilingTime
+        val boilingTime = internalState.value.eggDetails.boilingTimeFinal
         _viewEvent.trySend(ViewEvent.StartTimerService(boilingTime))
     }
 
@@ -230,7 +230,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private fun updateBoilingTime(boilingTime: Int = 0) {
+    private fun updateBoilingTime(boilingTime: Int? = null) {
         viewModelScope.launch(Dispatchers.IO) {
             val eggDetails = internalState.value.eggDetails
             val calculatedTime = if (eggDetails.isEggTimerMode) {
@@ -242,11 +242,11 @@ class MainViewModel @Inject constructor(
                     )
                 )
             } else {
-                val savedBoilingTime = getEggTimerFromPreferences().time
-                if (boilingTime == 0) savedBoilingTime else boilingTime * 60
+                val time = boilingTime ?: internalState.value.eggDetails.boilingTime
+                preferences.saveEggTimer(EggTimerDataModel(time))
+                time
             }
             preferences.saveEggDetails(eggDetails.toDataModel())
-            preferences.saveEggTimer(EggTimerDataModel(calculatedTime))
             internalState.update {
                 it.copy(eggDetails = it.eggDetails.copy(boilingTime = calculatedTime))
             }
@@ -266,7 +266,7 @@ class MainViewModel @Inject constructor(
         data class OnEggSizePressed(val eggSize: EggSize) : ViewAction()
         data class OnEggCountChanged(val eggCount: Int) : ViewAction()
         data class OnEggBoiledTypePressed(val eggBoiledType: EggBoiledType) : ViewAction()
-        data class UpdateBoilingTime(val boilingTime: Int = 0) : ViewAction()
+        data class UpdateBoilingTime(val boilingTime: Int?) : ViewAction()
         data object StartTimer : ViewAction()
         data class UpdateTimber(val time: Int) : ViewAction()
         data object CancelTimer : ViewAction()

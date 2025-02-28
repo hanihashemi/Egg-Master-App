@@ -66,7 +66,7 @@ fun EggBoilDetailsScreen(
 
     LaunchedEffect(Unit) {
         delay(500)
-        dispatch(UpdateBoilingTime())
+        dispatch(UpdateBoilingTime(null))
     }
 
     Scaffold(
@@ -76,7 +76,7 @@ fun EggBoilDetailsScreen(
                 onBackClicked = { dispatch(MainViewModel.ViewAction.NavigateBack) },
             )
         },
-        bottomBar = { BoilingTimeBottomBar(state.eggDetails.boilingTime) { dispatch(StartTimer) } },
+        bottomBar = { BoilingTimeBottomBar(state.eggDetails.boilingTimeFinal) { dispatch(StartTimer) } },
         containerColor = MaterialTheme.colorScheme.surface,
     ) { paddingValues ->
         Box(
@@ -137,7 +137,10 @@ fun EggBoilDetailsScreen(
                             addEggPrefix = false
                         )
 
-                        RulerTimePicker(maxValue = 90) { value ->
+                        RulerTimePicker(
+                            value = state.eggDetails.boilingTime,
+                            maxValue = 90,
+                        ) { value ->
                             dispatch(UpdateBoilingTime(value))
                         }
                     }

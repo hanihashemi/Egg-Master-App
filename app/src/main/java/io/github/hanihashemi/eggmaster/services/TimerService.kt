@@ -62,7 +62,7 @@ class TimerService : Service() {
         val notificationContent = getString(R.string.timer_service_notification_timer_started)
         val notification = createNotification(notificationContent, 0, 0)
         val notificationType = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
+            ServiceInfo.FOREGROUND_SERVICE_TYPE_SHORT_SERVICE
         } else 0
 
         ServiceCompat.startForeground(
